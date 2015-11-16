@@ -1,9 +1,3 @@
 @import 'base';
 @import 'vendor/normalize';
 @import '../../node_modules/bootstrap-material-design/dist/css/material.css';
-
-ul.card-list, ul.issue-list {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-}

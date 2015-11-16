@@ -2,13 +2,11 @@ import React from 'react';
 import {PropTypes as t} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {Input, ButtonInput} from 'react-bootstrap';
-import Card from 'material-ui/lib/card/card';
-import CardHeader from 'material-ui/lib/card/card-header';
-import CardText from 'material-ui/lib/card/card-text';
-import CardTitle from 'material-ui/lib/card/card-title';
+import {Input} from 'react-bootstrap';
+
 
 import * as repoActions from 'modules/repos';
+import {RepoList, IssueList, Loader} from '../components';
 
 // We define mapStateToProps and mapDispatchToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -23,67 +21,6 @@ const mapDispatchToProps = (dispatch) => ({
   actions : bindActionCreators(repoActions, dispatch)
 });
 
-
-// TODO: put in components
-class RepoList extends React.Component {
-  static propTypes = {
-    repos: t.array.isRequired
-  }
-  makeRepoElem(repo) {
-    return (
-      <li className='card-list-item'>
-        <Card>
-          <CardTitle title={repo} subtitle="Last released 3 days ago"/>
-        </Card>
-      </li>
-    );
-  }
-  render() {
-    return (
-      <div className="repo-list">
-        <h2>It might be time to release these...</h2>
-        <ul className='card-list'>
-          {this.props.repos.map((repo) => {return this.makeRepoElem(repo);})}
-        </ul>
-      </div>
-    )
-  }
-}
-
-
-class IssueList extends React.Component {
-  static propTypes = {
-    issues: t.array.isRequired
-  }
-  makeIssueElem(issue) {
-    return (
-      <li className='card-list-item'>
-        <Card>
-          <CardTitle title={issue.title} subtitle={issue.repo}/>
-        </Card>
-      </li>
-    );
-  }
-  render() {
-    return (
-        <div className="issue-list">
-            <h2>These issues may need attention...</h2>
-            <ul className="issue-list">
-                {this.props.issues.map((issue) => {return this.makeIssueElem(issue);})}
-            </ul>
-        </div>
-    );
-  }
-}
-
-class Loader extends React.Component {
-  render() {
-    return (
-      <h2 className='text-muted'>Loading. . .</h2>
-    )
-  }
-}
-
 let fakeIssues = [
     {num: 42, title: 'Needs more cowbell', repo: 'sloria/webargs'},
     {num: 24, title: 'Halp', repo: 'sloria/TextBlob'}
@@ -91,7 +28,7 @@ let fakeIssues = [
 export class HomeView extends React.Component {
   static propTypes = {
     actions  : t.object,
-    repos: t.array
+    repos: t.object
   }
   constructor(props) {
       super(props);
