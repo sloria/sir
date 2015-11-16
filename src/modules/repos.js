@@ -1,4 +1,4 @@
-import { createReducer }     from '../utils';
+import { createReducer }     from '../utils/redux';
 import APIClient from '../utils/APIClient';
 
 const ns = 'rero/repos';
@@ -15,18 +15,18 @@ const initialState = {
   repos: []
 };
 export default createReducer(initialState, {
-    [LOAD] : (state) => {
-      return Object.assign({}, state, {
-        repos: [],
-        requestPending: true
-      });
-    },
-    [LOAD_SUCCESS] : (state, payload) => {
-      return Object.assign({}, state, {
-        requestPending: false,
-        repos: payload.repos
-      })
-    }
+  [LOAD]: (state) => {
+    return Object.assign({}, state, {
+      repos: [],
+      requestPending: true
+    });
+  },
+  [LOAD_SUCCESS]: (state, payload) => {
+    return Object.assign({}, state, {
+      requestPending: false,
+      repos: payload.repos
+    })
+  }
 });
 
 
@@ -54,10 +54,9 @@ const client = new APIClient();
 export function fetchRepos(username) {
   return (dispatch) => {
     dispatch(requestRepos(username));
-    let resp = client.get('/repos/');
-    resp.then((res) => {
-      console.log(res);
-      dispatch(receiveRepos(username, res))
-    })
+    client.get('/repos/')
+      then((res) => {
+        dispatch(receiveRepos(username, res))
+      })
   }
 }

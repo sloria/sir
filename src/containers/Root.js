@@ -1,9 +1,10 @@
-import React                    from 'react';
-import { Provider }             from 'react-redux';
-import routes                   from '../routes';
-import { ReduxRouter }          from 'redux-router';
-import DevTools                 from './DevTools';
-import { createDevToolsWindow } from '../utils';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { ReduxRouter } from 'redux-router';
+
+import routes from '../routes';
+import DevTools from './DevTools';
+import { createDevToolsWindow } from '../utils/redux';
 
 export default class Root extends React.Component {
   static propTypes = {
