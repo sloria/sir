@@ -1,14 +1,15 @@
-import rootReducer          from '../reducers';
-import thunk                from 'redux-thunk';
-import routes               from '../routes';
+import thunk from 'redux-thunk';
 import { reduxReactRouter } from 'redux-router';
-import createHistory        from 'history/lib/createBrowserHistory';
-import DevTools             from 'containers/DevTools';
+import createHistory from 'history/lib/createBrowserHistory';
+import DevTools from 'containers/DevTools';
 import {
   applyMiddleware,
   compose,
   createStore
 } from 'redux';
+
+import rootReducer from '../modules/reducer';
+import routes from '../routes';
 
 export default function configureStore (initialState, debug = false) {
   let createStoreWithMiddleware;
@@ -32,8 +33,8 @@ export default function configureStore (initialState, debug = false) {
     rootReducer, initialState
   );
   if (module.hot) {
-    module.hot.accept('../reducers', () => {
-      const nextRootReducer = require('../reducers/index');
+    module.hot.accept('../modules', () => {
+      const nextRootReducer = require('../modules/reducer');
 
       store.replaceReducer(nextRootReducer);
     });

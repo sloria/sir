@@ -98,12 +98,10 @@ const paths = (() => {
 
 config.set('utils_paths', paths);
 config.set('utils_aliases', [
-  'actions',
   'components',
-  'constants',
+  'modules',
   'containers',
   'layouts',
-  'reducers',
   'routes',
   'services',
   'styles',

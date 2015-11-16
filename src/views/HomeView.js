@@ -8,7 +8,7 @@ import CardHeader from 'material-ui/lib/card/card-header';
 import CardText from 'material-ui/lib/card/card-text';
 import CardTitle from 'material-ui/lib/card/card-title';
 
-import repoActions from 'actions/repos';
+import * as repoActions from 'modules/repos';
 
 // We define mapStateToProps and mapDispatchToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -16,7 +16,7 @@ import repoActions from 'actions/repos';
 // the component can be tested w/ and w/o being connected.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 const mapStateToProps = (state) => ({
-  repos : state.repos,
+  repos: state.repos,
   routerState : state.router
 });
 const mapDispatchToProps = (dispatch) => ({
