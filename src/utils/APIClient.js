@@ -1,5 +1,17 @@
-// TODO: switch to isomorphic-fetch
-import superagent from 'superagent';
+/**
+ * API client for sending JSON requests to the API.
+ * Automatically formats the URL with the correct host, port,
+ * protocol, and API Prefix.
+ *
+ * Usage:
+ *
+ *   const client = new APIClient();
+ *   client.get('/repos/')
+ *    .then((data) => {
+ *        console.log(data);
+ *    })
+ */
+import fetch from 'isomorphic-fetch';
 
 const API_PREFIX = '/v1';
 // Use variables from config to build API URL
@@ -17,35 +29,53 @@ function formatUrl(path) {
   return PROTOCOL + API_BASE + API_PREFIX + adjustedPath;
 }
 
+// https://github.com/github/fetch#handling-http-error-statuses
+function checkStatus(response) {
+  if (response.status >= 200 && response.status < 300) {
+    return response
+  } else {
+    var error = new Error(response.statusText)
+    error.response = response
+    throw error
+  }
+}
+
+function parseJSON(response) {
+  return response.json();
+}
+
 /*
  * This silly underscore is here to avoid a mysterious "ReferenceError: ApiClient is not defined" error.
  * See Issue #14. https://github.com/erikras/react-redux-universal-hot-example/issues/14
  *
  * Remove it at your own risk.
+ *
+ * This class is adapted from https://github.com/erikras/react-redux-universal-hot-example/blob/master/src/helpers/ApiClient.js
  */
-
 const methods = ['get', 'post', 'put', 'patch', 'del'];
 class _APIClient {
   constructor() {
     methods.forEach((method) =>
-      this[method] = (path, { params, data } = {}) => new Promise((resolve, reject) => {
+      this[method] = (path, { params, data , overrides} = {}) => new Promise((resolve, reject) => {
         const url = formatUrl(path);
-        console.log(url);
-        const request = superagent[method](url);
-
-        if (params) {
-          request.query(params);
-        }
-
-//         if (__SERVER__ && req.get('cookie')) {
-//           request.set('cookie', req.get('cookie'));
-//         }
-
+        let defaults = {
+          method: method,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        };
         if (data) {
-          request.send(data);
+          defaults.body = JSON.stringify(data);
         }
-
-        request.end((err, { body } = {}) => err ? reject(body || err) : resolve(body));
+        const options = Object.assign({}, defaults, overrides);
+        fetch(url, options)
+          .then(checkStatus)
+          .then(parseJSON)
+          .then((body) => {
+            resolve(body);
+          })
+          .catch((error) => {
+            reject(error);
+          });
       }));
   }
 }
