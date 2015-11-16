@@ -1,27 +1,22 @@
 {
-  "name": "react-redux-starter-kit",
-  "version": "0.17.0",
-  "description": "Get started with React, Redux, and React-Router!",
-  "main": "index.js",
+  "name": "rero",
+  "version": "0.0.1",
+  "description": "",
   "scripts": {
     "clean": "rm -rf dist",
     "lint": "eslint ./src/**/*.js",
     "lint:tests": "eslint ./tests/**/*.spec.js",
     "compile": "webpack",
     "start": "npm run dev",
-    "dev": "node --harmony bin/webpack-dev-server",
+    "dev": "concurrent --kill-others \"node --harmony bin/webpack-dev-server\" \"npm run start-dev-api\"",
     "dev:nw": "npm run dev -- --nw",
     "dev:no-debug": "npm run dev -- --no_debug",
     "test": "node ./node_modules/karma/bin/karma start",
     "test:dev": "npm run test -- --watch",
     "deploy": "npm run lint && npm run test && npm run compile",
-    "start-dev-api": "python -m api.app"
+    "start-dev-api": "gunicorn api.app:app --bind localhost:3030 --worker-class aiohttp.worker.GunicornWebWorker --reload"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/davezuko/react-redux-starter-kit.git"
-  },
-  "author": "David Zukowski <david@zuko.me> (http://zuko.me)",
+  "author": "Steven Loria",
   "license": "MIT",
   "dependencies": {
     "babel": "^5.8.23",
@@ -49,6 +44,7 @@
     "babel-plugin-react-transform": "^1.1.0",
     "babel-runtime": "^5.8.20",
     "chai-as-promised": "^5.1.0",
+    "concurrently": "^1.0.0",
     "css-loader": "^0.21.0",
     "eslint": "^1.0.0",
     "eslint-config-airbnb": "^1.0.0",

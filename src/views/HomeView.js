@@ -68,7 +68,6 @@ export class HomeView extends React.Component {
 
         <div className="row">
           <div className="col-lg-12">
-            {this.props.repos.requestPending ? <Loader /> : ''}
             {issues.length ? <IssueList issues={issues} /> : ''}
           </div>
         </div>

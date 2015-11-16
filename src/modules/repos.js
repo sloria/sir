@@ -48,15 +48,8 @@ function receiveRepos(username, repos) {
     }
   }
 }
-// TODO: Make it real
-
 
 const client = new APIClient();
-
-const fakeData = [
-  'sloria/TextBlob',
-  'sloria/webargs'
-]
 
 export function fetchRepos(username) {
   return (dispatch) => {
