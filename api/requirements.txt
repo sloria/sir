@@ -1,0 +1,4 @@
+aiohttp==0.18.4
+aiohttp_utils==1.0.0
+aiohttp_cors==0.1.0
+gunicorn==19.3.0

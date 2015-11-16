@@ -1,4 +1,5 @@
 import { createReducer }     from '../utils';
+import APIClient from '../utils/APIClient';
 
 const ns = 'rero/repos';
 
@@ -49,6 +50,9 @@ function receiveRepos(username, repos) {
 }
 // TODO: Make it real
 
+
+const client = new APIClient();
+
 const fakeData = [
   'sloria/TextBlob',
   'sloria/webargs'
@@ -57,8 +61,10 @@ const fakeData = [
 export function fetchRepos(username) {
   return (dispatch) => {
     dispatch(requestRepos(username));
-    setTimeout(() => {
-      dispatch(receiveRepos(username, fakeData))
-    }, 300);
+    let resp = client.get('/repos/');
+    resp.then((res) => {
+      console.log(res);
+      dispatch(receiveRepos(username, res))
+    })
   }
 }
