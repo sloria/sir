@@ -7,14 +7,14 @@
     "lint": "eslint ./src/**/*.js",
     "lint:tests": "eslint ./tests/**/*.spec.js",
     "compile": "webpack",
-    "start": "npm run dev",
-    "dev": "concurrent --kill-others \"node --harmony bin/webpack-dev-server\" \"npm run start-dev-api\"",
+    "start": "concurrent --kill-others \"npm run dev\" \"npm run dev:api\"",
+    "dev": "node --harmony bin/webpack-dev-server",
     "dev:nw": "npm run dev -- --nw",
     "dev:no-debug": "npm run dev -- --no_debug",
+    "dev:api": "gunicorn api.app:app --bind localhost:3030 --worker-class aiohttp.worker.GunicornWebWorker --reload",
     "test": "node ./node_modules/karma/bin/karma start",
     "test:dev": "npm run test -- --watch",
-    "deploy": "npm run lint && npm run test && npm run compile",
-    "start-dev-api": "gunicorn api.app:app --bind localhost:3030 --worker-class aiohttp.worker.GunicornWebWorker --reload"
+    "deploy": "npm run lint && npm run test && npm run compile"
   },
   "author": "Steven Loria",
   "license": "MIT",

@@ -3,6 +3,34 @@ import ReactDOM     from 'react-dom';
 import { Provider } from 'react-redux';
 import DevTools     from 'containers/DevToolsWindow';
 
+/**
+ * Shortcut for reating reducers.
+ * What once looked like:
+ *
+ *   import { TODO_CREATE } from 'constants/todo';
+ *
+ *   const initialState = [];
+ *   const handlers = {
+ *     [TODO_CREATE] : (state, payload) => { ... }
+ *   };
+ *
+ *   export default function todo (state = initialState, action) {
+ *     const handler = handlers[action.type];
+ *
+ *     return handler ? handler(state, action.payload) : state;
+ *   }
+ *
+ * Now looks like:
+ *
+ *    import { TODO_CREATE }   from 'constants/todo';
+ *    import { createReducer } from 'utils';
+ *
+ *    const initialState = [];
+ *
+ *    export default createReducer(initialState, {
+ *      [TODO_CREATE] : (state, payload) => { ... }
+ *    });
+ */
 export function createReducer (initialState, reducerMap) {
   return (state = initialState, action) => {
     const reducer = reducerMap[action.type];
