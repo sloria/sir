@@ -1,0 +1,4 @@
+-r ./requirements.txt
+decorator==4.0.4
+pytest
+flake8==2.5.0

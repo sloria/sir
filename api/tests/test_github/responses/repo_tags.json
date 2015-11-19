@@ -1,0 +1,272 @@
+[
+  {
+    "name": "2.2.1",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/2.2.1",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/2.2.1",
+    "commit": {
+      "sha": "ea1def94e8dc534a1cd0da4aa6756d25cd2762ca",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/ea1def94e8dc534a1cd0da4aa6756d25cd2762ca"
+    }
+  },
+  {
+    "name": "2.2.0",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/2.2.0",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/2.2.0",
+    "commit": {
+      "sha": "80d92059f0b2db3cd95f129f7f408aa7aaf3519b",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/80d92059f0b2db3cd95f129f7f408aa7aaf3519b"
+    }
+  },
+  {
+    "name": "2.1.3",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/2.1.3",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/2.1.3",
+    "commit": {
+      "sha": "6156b021be2d7a00b4341a159daf1e1a62507066",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/6156b021be2d7a00b4341a159daf1e1a62507066"
+    }
+  },
+  {
+    "name": "2.1.2",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/2.1.2",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/2.1.2",
+    "commit": {
+      "sha": "f28ee196b37bf018b5ae8d4f70b1eb997e0307a3",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/f28ee196b37bf018b5ae8d4f70b1eb997e0307a3"
+    }
+  },
+  {
+    "name": "2.1.1",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/2.1.1",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/2.1.1",
+    "commit": {
+      "sha": "04d3f84152d262bdd70e2964f97d5729bda785c8",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/04d3f84152d262bdd70e2964f97d5729bda785c8"
+    }
+  },
+  {
+    "name": "2.1.0",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/2.1.0",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/2.1.0",
+    "commit": {
+      "sha": "d6cc2ae3fdcc7d593dba3f76309910a2eff27b6c",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/d6cc2ae3fdcc7d593dba3f76309910a2eff27b6c"
+    }
+  },
+  {
+    "name": "2.0.0",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/2.0.0",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/2.0.0",
+    "commit": {
+      "sha": "53a20fc8711be825c0be08daf67c7d52cc382ac2",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/53a20fc8711be825c0be08daf67c7d52cc382ac2"
+    }
+  },
+  {
+    "name": "2.0.0rc2",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/2.0.0rc2",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/2.0.0rc2",
+    "commit": {
+      "sha": "f27864d2c4dcac4686626b989d71cfa8dee6cbe2",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/f27864d2c4dcac4686626b989d71cfa8dee6cbe2"
+    }
+  },
+  {
+    "name": "2.0.0rc1",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/2.0.0rc1",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/2.0.0rc1",
+    "commit": {
+      "sha": "961d98f3ce9d35da661bcee874d6ed739716bfd8",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/961d98f3ce9d35da661bcee874d6ed739716bfd8"
+    }
+  },
+  {
+    "name": "2.0.0b5",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/2.0.0b5",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/2.0.0b5",
+    "commit": {
+      "sha": "a8b33850c74975250fa81308ce3aa4868128d3ba",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/a8b33850c74975250fa81308ce3aa4868128d3ba"
+    }
+  },
+  {
+    "name": "2.0.0b4",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/2.0.0b4",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/2.0.0b4",
+    "commit": {
+      "sha": "083f0b8da5661c6b0f26da5dc80e6c3b29a90756",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/083f0b8da5661c6b0f26da5dc80e6c3b29a90756"
+    }
+  },
+  {
+    "name": "2.0.0b3",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/2.0.0b3",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/2.0.0b3",
+    "commit": {
+      "sha": "5d4af9863ebfa57064e44ddc793016641233e736",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/5d4af9863ebfa57064e44ddc793016641233e736"
+    }
+  },
+  {
+    "name": "2.0.0b2",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/2.0.0b2",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/2.0.0b2",
+    "commit": {
+      "sha": "49af3187e82e09866612bb9317fa91ea0379d1d8",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/49af3187e82e09866612bb9317fa91ea0379d1d8"
+    }
+  },
+  {
+    "name": "2.0.0b1",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/2.0.0b1",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/2.0.0b1",
+    "commit": {
+      "sha": "33ed4c57bed8f7f6ccbf3517ba35d7e770b86727",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/33ed4c57bed8f7f6ccbf3517ba35d7e770b86727"
+    }
+  },
+  {
+    "name": "2.0.0a1",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/2.0.0a1",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/2.0.0a1",
+    "commit": {
+      "sha": "175d58f966a72c42b1ace6162b30704be6e60f7c",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/175d58f966a72c42b1ace6162b30704be6e60f7c"
+    }
+  },
+  {
+    "name": "1.2.6",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/1.2.6",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/1.2.6",
+    "commit": {
+      "sha": "c786c58242028c6742ded29bf7f4ab9c3319818d",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/c786c58242028c6742ded29bf7f4ab9c3319818d"
+    }
+  },
+  {
+    "name": "1.2.5",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/1.2.5",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/1.2.5",
+    "commit": {
+      "sha": "053b623d43d72c5b43d52934777e514ab9894e6b",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/053b623d43d72c5b43d52934777e514ab9894e6b"
+    }
+  },
+  {
+    "name": "1.2.4",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/1.2.4",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/1.2.4",
+    "commit": {
+      "sha": "666dcbd61a85ee5939d643f061bcd0ad8c741b84",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/666dcbd61a85ee5939d643f061bcd0ad8c741b84"
+    }
+  },
+  {
+    "name": "1.2.3",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/1.2.3",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/1.2.3",
+    "commit": {
+      "sha": "f8be8c324ac8e9ce2e4836a11da200d7cd8412d2",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/f8be8c324ac8e9ce2e4836a11da200d7cd8412d2"
+    }
+  },
+  {
+    "name": "1.2.2",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/1.2.2",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/1.2.2",
+    "commit": {
+      "sha": "93a65f8a9100a91596af1877493513bf8a453aea",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/93a65f8a9100a91596af1877493513bf8a453aea"
+    }
+  },
+  {
+    "name": "1.2.1",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/1.2.1",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/1.2.1",
+    "commit": {
+      "sha": "881241482e8abb3057ad8a85990bef9d0bd46cd8",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/881241482e8abb3057ad8a85990bef9d0bd46cd8"
+    }
+  },
+  {
+    "name": "1.2.0",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/1.2.0",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/1.2.0",
+    "commit": {
+      "sha": "81342369ee663650d0f904d3da855fff970212dd",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/81342369ee663650d0f904d3da855fff970212dd"
+    }
+  },
+  {
+    "name": "1.1.0",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/1.1.0",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/1.1.0",
+    "commit": {
+      "sha": "6e1af04e29a2b97370a2ba5154ac60e114275b88",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/6e1af04e29a2b97370a2ba5154ac60e114275b88"
+    }
+  },
+  {
+    "name": "1.0.1",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/1.0.1",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/1.0.1",
+    "commit": {
+      "sha": "ee15552c8cc41137198b173f9ee15e5f8c21c4e6",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/ee15552c8cc41137198b173f9ee15e5f8c21c4e6"
+    }
+  },
+  {
+    "name": "1.0.0",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/1.0.0",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/1.0.0",
+    "commit": {
+      "sha": "cb2cb34f069d9cf409665bc98a5565590a548ead",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/cb2cb34f069d9cf409665bc98a5565590a548ead"
+    }
+  },
+  {
+    "name": "1.0-a",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/1.0-a",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/1.0-a",
+    "commit": {
+      "sha": "83fd00893d445c6ebc0028bf369eaa67466c8e30",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/83fd00893d445c6ebc0028bf369eaa67466c8e30"
+    }
+  },
+  {
+    "name": "0.7.0",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/0.7.0",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/0.7.0",
+    "commit": {
+      "sha": "4e14f192ac478f0f0a46c671a53dc55fc5831c41",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/4e14f192ac478f0f0a46c671a53dc55fc5831c41"
+    }
+  },
+  {
+    "name": "0.6.0",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/0.6.0",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/0.6.0",
+    "commit": {
+      "sha": "47f4ce93deabff79ba3546b8e484e457f0d1afd3",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/47f4ce93deabff79ba3546b8e484e457f0d1afd3"
+    }
+  },
+  {
+    "name": "0.5.5",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/0.5.5",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/0.5.5",
+    "commit": {
+      "sha": "b41f8ef319d5eb4be2c9e5eaf0e02b5424ce91ca",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/b41f8ef319d5eb4be2c9e5eaf0e02b5424ce91ca"
+    }
+  },
+  {
+    "name": "0.5.4",
+    "zipball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/zipball/0.5.4",
+    "tarball_url": "https://api.github.com/repos/marshmallow-code/marshmallow/tarball/0.5.4",
+    "commit": {
+      "sha": "798b1b127d1ff86d4e4a967a1fd2997ac2225db0",
+      "url": "https://api.github.com/repos/marshmallow-code/marshmallow/commits/798b1b127d1ff86d4e4a967a1fd2997ac2225db0"
+    }
+  }
+]
