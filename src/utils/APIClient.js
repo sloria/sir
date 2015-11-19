@@ -32,11 +32,11 @@ function formatUrl(path) {
 // https://github.com/github/fetch#handling-http-error-statuses
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
-    return response
+    return response;
   } else {
-    var error = new Error(response.statusText)
-    error.response = response
-    throw error
+    let error = new Error(response.statusText); //eslint-disable-line
+    error.response = response;
+    throw error;
   }
 }
 
@@ -56,9 +56,9 @@ const methods = ['get', 'post', 'put', 'patch', 'del'];
 class _APIClient {
   constructor() {
     methods.forEach((method) =>
-      this[method] = (path, { params, data , overrides} = {}) => new Promise((resolve, reject) => {
+      this[method] = (path, { data, overrides} = {}) => new Promise((resolve, reject) => {
         const url = formatUrl(path);
-        let defaults = {
+        const defaults = {
           method: method,
           'Accept': 'application/json',
           'Content-Type': 'application/json'

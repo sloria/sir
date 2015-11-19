@@ -18,7 +18,7 @@ export default class Root extends React.Component {
     debugExternal : false
   }
 
-  renderDevTools () {
+  renderDevTools() {
     if (!this.props.debug) {
       return null;
     }
@@ -27,7 +27,7 @@ export default class Root extends React.Component {
       createDevToolsWindow(this.props.store) : <DevTools />;
   }
 
-  render () {
+  render() {
     return (
       <div>
         <Provider store={this.props.store}>

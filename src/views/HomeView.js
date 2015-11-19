@@ -2,11 +2,9 @@ import React from 'react';
 import {PropTypes as t} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {Input} from 'react-bootstrap';
 
-
-import * as repoActions from 'modules/repos';
-import {RepoList, IssueList, Loader} from '../components';
+import * as actions from 'modules/should-i-release';
+import {Result, ResponseError, SirTextInput} from '../components';
 
 // We define mapStateToProps and mapDispatchToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -14,63 +12,76 @@ import {RepoList, IssueList, Loader} from '../components';
 // the component can be tested w/ and w/o being connected.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 const mapStateToProps = (state) => ({
-  repos: state.repos,
+  shouldIRelease: state.shouldIRelease,
   routerState : state.router
 });
 const mapDispatchToProps = (dispatch) => ({
-  actions : bindActionCreators(repoActions, dispatch)
+  actions: bindActionCreators(actions, dispatch)
 });
 
-let fakeIssues = [
-    {num: 42, title: 'Needs more cowbell', repo: 'sloria/webargs'},
-    {num: 24, title: 'Halp', repo: 'sloria/TextBlob'}
-]
+function validateRepoName(text) {
+  if (text) {
+    return /.+\/.+/.test(text);
+  } else {
+    return true;
+  }
+}
+
 export class HomeView extends React.Component {
   static propTypes = {
-    actions  : t.object,
-    repos: t.object
+    actions: t.object,
+    shouldIRelease: t.object
   }
   constructor(props) {
-      super(props);
-      this.handleSubmit = this.handleSubmit.bind(this);
+    super(props)
+    this.state = {
+      isValid : true,
+      showMessage: false
+    };
   }
-  handleSubmit(e) {
-    e.preventDefault();
-    // TODO: Change the URL
-    this.props.actions.fetchRepos(this.getInputValue());
+  handleSubmit(text) {
+    const [username, repo] = text.split('/');
+    if (this.state.isValid) {
+      this.props.actions.fetch(username.trim(), repo.trim());
+    }
+    this.setState({isValid: this.state.isValid, showMessage: true});
   }
-  getInputValue() {
-      return this.refs.ghInput.getValue();
-  }
-  render () {
-
-    let issues = fakeIssues;
-    let repoList = this.props.repos.repos;
+  render() {
+    const showResult = this.props.shouldIRelease.shouldRelease != null;  //eslint-disable-line
+    const shouldRelease = this.props.shouldIRelease.shouldRelease;
+    const aheadBy = this.props.shouldIRelease.aheadBy;
+    const error = this.props.shouldIRelease.error;
     return (
       <div className='container'>
 
-        <div className="row">
-          <h1>Enter your GitHub username</h1>
-        </div>
-
-        <div className="row">
-          <form onSubmit={this.handleSubmit}>
-              <Input bsSize='large' ref='ghInput' type='text' placeholder='Enter your GitHub username and press Enter' />
-          </form>
-        </div>
-
-        <div className="row">
-          <div className="col-lg-12">
-            {this.props.repos.requestPending ? <Loader /> : ''}
-            {repoList.length ? <RepoList repos={repoList} /> : ''}
+        <div className='row'>
+          <div className='col-lg-12'>
+            <h1>Should I release?</h1>
           </div>
         </div>
 
-        <div className="row">
-          <div className="col-lg-12">
-            {issues.length ? <IssueList issues={issues} /> : ''}
+        <div className='row'>
+          <div className='col-lg-12'>
+            <form onSubmit={(e) => e.preventDefault()}>
+              <SirTextInput
+                onSave={this.handleSubmit.bind(this)}
+                onValid={() => this.setState({isValid: true})}
+                onInvalid={() => this.setState({isValid: false})}
+                onChange={() => this.setState({showMessage: false})}
+                validate={validateRepoName}
+                placeholder='Type a GitHub repo and press Enter' />
+            </form>
+            <span className='help-block'>{this.state.showMessage && !this.state.isValid ? 'Invalid repo name' : ''}</span>
           </div>
         </div>
+
+        <div className='row'>
+          <div className='col-lg-12'>
+            {error ? <ResponseError repo={this.getInputValue()} response={error.response} /> : ''}
+            {showResult ? <Result loading={this.props.shouldIRelease.requestPending} shouldRelease={shouldRelease} aheadBy={aheadBy} /> : ''}
+          </div>
+        </div>
+
       </div>
     );
   }

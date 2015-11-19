@@ -11,7 +11,7 @@ import {
 import rootReducer from '../modules/reducer';
 import routes from '../routes';
 
-export default function configureStore (initialState, debug = false) {
+export default function configureStore(initialState, debug = false) {
   let createStoreWithMiddleware;
 
   const middleware = applyMiddleware(thunk);

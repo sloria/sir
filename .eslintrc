@@ -8,17 +8,18 @@
     "__DEV__"      : false,
     "__PROD__"     : false,
     "__DEBUG__"    : false,
-    "__DEBUG_NW__" : false
+    "__DEBUG_NW__" : false,
+    "__APIHOST__" : false,
+    "__APIPORT__" : false
   },
   "rules": {
-    "comma-dangle" : [1, "never"],
+    "comma-dangle" : 0,
     "func-names"   : 0,
     "key-spacing"  : 0,
-    "space-before-function-paren" : [2, "always"],
     "no-else-return"   : 0,
     "no-multi-spaces"  : 0,
     "quotes"           : [2, "single"],
     "jsx-quotes"       : [2, "prefer-single"],
-    "one-var"          : 0
+    "react/no-multi-comp": 0
   }
 }

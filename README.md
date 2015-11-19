@@ -1,4 +1,4 @@
-# RERO: Your open source assistant
+# sir: Your open source assistant
 
 Requirements
 ------------
@@ -19,8 +19,8 @@ pip install -r api/requirements.txt
 Create a Developer App on GitHub and add the following envvars:
 
 ```shell
-export RERO_GITHUB_CLIENT_ID='your-client-id'
-export RERO_GITHUB_CLIENT_SECRET='your-client-secret'
+export SIR_GITHUB_CLIENT_ID='your-client-id'
+export SIR_GITHUB_CLIENT_SECRET='your-client-secret'
 ```
 
 Start the app:

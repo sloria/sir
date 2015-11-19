@@ -1,9 +1,9 @@
 import { combineReducers }    from 'redux';
 import { routerStateReducer } from 'redux-router';
-import repos from './repos';
+import shouldIRelease from './should-i-release';
 
 
 export default combineReducers({
-  repos,
+  shouldIRelease,
   router: routerStateReducer
 });

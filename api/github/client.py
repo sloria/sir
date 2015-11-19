@@ -25,7 +25,7 @@ class GitHubClient:
 
         kwargs.setdefault('headers', {})
         kwargs['headers'].update({
-            'User-Agent': 'rero',
+            'User-Agent': 'sir',
             'Accept': 'application/vnd.github.v3+json',
         })
 

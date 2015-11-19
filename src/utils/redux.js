@@ -31,7 +31,7 @@ import DevTools     from 'containers/DevToolsWindow';
  *      [TODO_CREATE] : (state, payload) => { ... }
  *    });
  */
-export function createReducer (initialState, reducerMap) {
+export function createReducer(initialState, reducerMap) {
   return (state = initialState, action) => {
     const reducer = reducerMap[action.type];
 
@@ -39,7 +39,7 @@ export function createReducer (initialState, reducerMap) {
   };
 }
 
-export function createDevToolsWindow (store) {
+export function createDevToolsWindow(store) {
   const win = window.open(
     null,
     'redux-devtools', // give it a name so it reuses the same window
