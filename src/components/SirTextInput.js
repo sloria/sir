@@ -6,12 +6,20 @@ const ENTER = 13;
 export default class SirTextInput extends React.Component {
   static propTypes = {
     onSave: t.func.isRequired,
+    onSaveInvalid: t.func,
     validate: t.func,
+    onValid: t.func,
     onInvalid: t.func,
     onChange: t.func,
     onValid: t.func,
     text: t.string,
     placeholder: t.string
+  }
+  static defaultProps = {
+    validate: () => true,
+    onSaveInvalid: () => null,
+    onInvalid: () => null,
+    onValid: () => null
   }
   constructor(props, context) {
     super(props, context);
@@ -24,19 +32,23 @@ export default class SirTextInput extends React.Component {
   handleSubmit(e) {
     const text = e.target.value.trim();
     if (e.which === ENTER) {
-      this.props.onSave(text);
-      this.setState({ text: '' });
+      if (this.state.isValid) {
+        this.props.onSave(text);
+        this.setState({ text: '' });
+      } else {
+        this.props.onSaveInvalid(text);
+      }
     }
   }
 
   handleChange(e) {
     const text = e.target.value;
     let isValid = false;
-    if (this.props.validate && this.props.validate(text)) {
+    if (this.props.validate(text)) {
       isValid = true;
-      this.props.onValid && this.props.onValid(text);
+      this.props.onValid(text);
     } else {
-      this.props.onInvalid && this.props.onInvalid(text);
+      this.props.onInvalid(text);
     }
     this.props.onChange(e);
     this.setState({text, isValid});
@@ -58,4 +70,3 @@ export default class SirTextInput extends React.Component {
     );
   }
 }
-

@@ -20,11 +20,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 function validateRepoName(text) {
-  if (text) {
-    return /.+\/.+/.test(text);
-  } else {
-    return true;
-  }
+  return !text ||  /.+\/.+/.test(text);
 }
 
 export class HomeView extends React.Component {
@@ -33,24 +29,21 @@ export class HomeView extends React.Component {
     shouldIRelease: t.object
   }
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       isValid : true,
-      showMessage: false
+      showMessage: false,
+      text: ''
     };
   }
-  handleSubmit(text) {
+  handleSave(text) {
     const [username, repo] = text.split('/');
-    if (this.state.isValid) {
-      this.props.actions.fetch(username.trim(), repo.trim());
-    }
+    this.props.actions.fetch(username.trim(), repo.trim());
     this.setState({isValid: this.state.isValid, showMessage: true});
   }
   render() {
-    const showResult = this.props.shouldIRelease.shouldRelease != null;  //eslint-disable-line
-    const shouldRelease = this.props.shouldIRelease.shouldRelease;
-    const aheadBy = this.props.shouldIRelease.aheadBy;
-    const error = this.props.shouldIRelease.error;
+    const sirData = this.props.shouldIRelease;
+    const showResult = sirData.shouldRelease != null;  //eslint-disable-line
     return (
       <div className='container'>
 
@@ -64,10 +57,11 @@ export class HomeView extends React.Component {
           <div className='col-lg-12'>
             <form onSubmit={(e) => e.preventDefault()}>
               <SirTextInput
-                onSave={this.handleSubmit.bind(this)}
+                onSave={this.handleSave.bind(this)}
+                onSaveInvalid={() => this.setState({showMessage: true})}
                 onValid={() => this.setState({isValid: true})}
                 onInvalid={() => this.setState({isValid: false})}
-                onChange={() => this.setState({showMessage: false})}
+                onChange={(text) => this.setState({text: text, showMessage: false})}
                 validate={validateRepoName}
                 placeholder='Type a GitHub repo and press Enter' />
             </form>
@@ -77,11 +71,18 @@ export class HomeView extends React.Component {
 
         <div className='row'>
           <div className='col-lg-12'>
-            {error ? <ResponseError repo={this.getInputValue()} response={error.response} /> : ''}
-            {showResult ? <Result loading={this.props.shouldIRelease.requestPending} shouldRelease={shouldRelease} aheadBy={aheadBy} /> : ''}
+            {sirData.results.map((result) => {
+              return (
+                <Result
+                  username={result.username}
+                  repo={result.repo}
+                  loading={result.requestPending}
+                  shouldRelease={result.shouldRelease}
+                  aheadBy={result.aheadBy} />
+              );
+            })}
           </div>
         </div>
-
       </div>
     );
   }

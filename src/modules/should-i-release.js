@@ -1,7 +1,13 @@
 import { createReducer }     from '../utils/redux';
 import APIClient from '../utils/APIClient';
 
+const assign = Object.assign;
+
 const client = new APIClient();
+
+function repoName(username, repo) {
+  return `${username.toLowerCase()}/${repo.toLowerCase()}`;
+}
 
 // Action types
 const ns = 'sir/should-i-release';
@@ -12,29 +18,55 @@ const LOAD_FAIL = `${ns}/LOAD_FAIL`;
 // Reducer
 
 const initialState = {
-  requestPending: false,
-  shouldRelease: null,
-  aheadBy: null,
-  error: null
+  error: null,
+  // Each result is an object of the form
+  // {
+  //   username: <string>,
+  //   repo: <string>,
+  //   shouldRelease: <bool>,
+  //   aheadBy: <bool>,
+  //   requestPending: <bool>
+  //   error: <Error or null>
+  // }
+  results: []
 };
 export default createReducer(initialState, {
-  [LOAD]: (state) => {
-    return Object.assign({}, state, {
-      requestPending: true
+  [LOAD]: (state, {username, repo}) => {
+    return assign({}, state, {
+      results: state.results.map((result) => {
+        if (repoName(username, repo) === repoName(result.username, result.repo)) {
+          return assign({}, result, { requestPending: true});
+        } else {
+          return result;
+        }
+      })
     });
   },
-  [LOAD_SUCCESS]: (state, payload) => {
-    const resp = payload.response;
-    return Object.assign({}, state, {
+  [LOAD_SUCCESS]: (state, {username, repo, response}) => {
+    const result = {
+      username: username,
+      repo: repo,
       requestPending: false,
-      shouldRelease: resp.should_release,
-      aheadBy: resp.ahead_by
+      shouldRelease: response.should_release,
+      aheadBy: response.ahead_by,
+      error: null
+    };
+    return assign({}, state, {
+      results: [
+        result,
+        ...state.results
+      ]
     });
   },
-  [LOAD_FAIL]: (state, err) => {
-    return Object.assign({}, state, {
-      requestPending: false,
-      error: err
+  [LOAD_FAIL]: (state, {error, username, repo}) => {
+    return assign({}, state, {
+      results: state.results.map((result) => {
+        if (repoName(username, repo) === repoName(result.username, result.repo)) {
+          return assign({}, result, { requestPending: false, error: error});
+        } else {
+          return result;
+        }
+      })
     });
   }
 });
@@ -61,14 +93,16 @@ function success(username, repo, response) {
   };
 }
 
-function error(err) {
+function fail(error, username, repo) {
   return {
     type: LOAD_FAIL,
-    payload: err,
-    error: true
+    payload: {
+      error,
+      username,
+      repo
+    }
   };
 }
-
 
 export function fetch(username, repo) {
   return (dispatch) => {
@@ -78,7 +112,7 @@ export function fetch(username, repo) {
         dispatch(success(username, repo, res));
       })
       .catch((err) => {
-        dispatch(error(err));
+        dispatch(fail(err, username, repo));
       });
   };
 }
