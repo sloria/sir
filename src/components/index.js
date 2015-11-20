@@ -4,6 +4,6 @@
  *  ie: import { CounterButton, InfoBar } from 'components';
  *
  */
-export Result from './Result';
+export SirResult from './SirResult';
 export ResponseError from './ResponseError';
 export SirTextInput from './SirTextInput';

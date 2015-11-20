@@ -7,49 +7,39 @@ export default class SirTextInput extends React.Component {
   static propTypes = {
     onSave: t.func.isRequired,
     onSaveInvalid: t.func,
-    validate: t.func,
-    onValid: t.func,
-    onInvalid: t.func,
     onChange: t.func,
-    onValid: t.func,
     text: t.string,
-    placeholder: t.string
+    placeholder: t.string,
+    isValid: t.func
   }
   static defaultProps = {
-    validate: () => true,
+    onChange: () => null,
     onSaveInvalid: () => null,
-    onInvalid: () => null,
-    onValid: () => null
+    isValid: () => true
   }
   constructor(props, context) {
     super(props, context);
     this.state = {
       text: this.props.text || '',
-      isValid: true
     };
   }
 
   handleSubmit(e) {
     const text = e.target.value.trim();
     if (e.which === ENTER) {
-      if (this.state.isValid) {
+      const isValid = this.props.isValid(text);
+      if (isValid && typeof isValid !== 'string') {
         this.props.onSave(text);
-        this.setState({ text: '' });
+        this.setState({text: ''});
       } else {
-        this.props.onSaveInvalid(text);
+        this.props.onSaveInvalid(text, isValid);
       }
     }
   }
 
   handleChange(e) {
     const text = e.target.value;
-    let isValid = false;
-    if (this.props.validate(text)) {
-      isValid = true;
-      this.props.onValid(text);
-    } else {
-      this.props.onInvalid(text);
-    }
+    const isValid = this.props.isValid(text)
     this.props.onChange(e);
     this.setState({text, isValid});
   }
@@ -58,7 +48,7 @@ export default class SirTextInput extends React.Component {
     return (
       <Input
         type='text'
-        bsStyle={this.state.isValid ? 'success' : 'error'}
+        bsStyle={this.props.isValid ? 'success' : 'error'}
         bsSize='large'
         autoFocus='true'
         value={this.state.text}

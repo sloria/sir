@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as actions from 'modules/should-i-release';
-import {Result, ResponseError, SirTextInput} from '../components';
+import {SirResult, SirTextInput, ResponseError} from '../components';
+import {repoName} from '../utils/github';
 
 // We define mapStateToProps and mapDispatchToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -31,19 +32,32 @@ export class HomeView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isValid : true,
-      showMessage: false,
+      errorMessage: false,
       text: ''
     };
   }
   handleSave(text) {
     const [username, repo] = text.split('/');
     this.props.actions.fetch(username.trim(), repo.trim());
-    this.setState({isValid: this.state.isValid, showMessage: true});
+  }
+  validate(text) {
+    if (!text) {
+      return true;
+    }
+    const [username, repo] = text.split('/');
+    const inList = (username && repo && this.props.shouldIRelease.results.filter((result) => {
+      return repoName(result.username, result.repo) === repoName(username, repo);
+    }).length);
+    if (inList) {
+      return 'Already in list';
+    }
+    if (text && !validateRepoName(text)) {
+      return 'Invalid repo name';
+    }
+    return true;
   }
   render() {
     const sirData = this.props.shouldIRelease;
-    const showResult = sirData.shouldRelease != null;  //eslint-disable-line
     return (
       <div className='container'>
 
@@ -58,29 +72,39 @@ export class HomeView extends React.Component {
             <form onSubmit={(e) => e.preventDefault()}>
               <SirTextInput
                 onSave={this.handleSave.bind(this)}
-                onSaveInvalid={() => this.setState({showMessage: true})}
-                onValid={() => this.setState({isValid: true})}
-                onInvalid={() => this.setState({isValid: false})}
-                onChange={(text) => this.setState({text: text, showMessage: false})}
-                validate={validateRepoName}
+                onChange={(e) => this.setState({text: e.target.value})}
+                onSaveInvalid={(text, msg) => this.setState({errorMessage: msg})}
+                isValid={this.validate.bind(this)}
                 placeholder='Type a GitHub repo and press Enter' />
             </form>
-            <span className='help-block'>{this.state.showMessage && !this.state.isValid ? 'Invalid repo name' : ''}</span>
+            <span className='help-block'>{this.state.errorMessage}</span>
           </div>
         </div>
 
         <div className='row'>
           <div className='col-lg-12'>
-            {sirData.results.map((result) => {
-              return (
-                <Result
-                  username={result.username}
-                  repo={result.repo}
-                  loading={result.requestPending}
-                  shouldRelease={result.shouldRelease}
-                  aheadBy={result.aheadBy} />
-              );
-            })}
+            <ul style={{listStyle: 'none', paddingLeft: 0}}>
+              {sirData.results.map((result) => {
+                return (
+                  <li style={{marginTop: '8px'}}>
+                    {
+                      result.error ?
+                        <ResponseError
+                          username={result.username}
+                          repo={result.repo}
+                          response={result.error.response} />
+                      :
+                        <SirResult
+                          username={result.username}
+                          repo={result.repo}
+                          loading={result.requestPending}
+                          shouldRelease={result.shouldRelease}
+                          aheadBy={result.aheadBy} />
+                    }
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </div>
       </div>

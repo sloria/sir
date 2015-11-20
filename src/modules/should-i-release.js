@@ -1,13 +1,10 @@
 import { createReducer }     from '../utils/redux';
 import APIClient from '../utils/APIClient';
+import {repoName} from '../utils/github';
 
 const assign = Object.assign;
 
 const client = new APIClient();
-
-function repoName(username, repo) {
-  return `${username.toLowerCase()}/${repo.toLowerCase()}`;
-}
 
 // Action types
 const ns = 'sir/should-i-release';
@@ -32,23 +29,12 @@ const initialState = {
 };
 export default createReducer(initialState, {
   [LOAD]: (state, {username, repo}) => {
-    return assign({}, state, {
-      results: state.results.map((result) => {
-        if (repoName(username, repo) === repoName(result.username, result.repo)) {
-          return assign({}, result, { requestPending: true});
-        } else {
-          return result;
-        }
-      })
-    });
-  },
-  [LOAD_SUCCESS]: (state, {username, repo, response}) => {
     const result = {
       username: username,
       repo: repo,
-      requestPending: false,
-      shouldRelease: response.should_release,
-      aheadBy: response.ahead_by,
+      aheadBy: null,
+      shouldRelease: null,
+      requestPending: true,
       error: null
     };
     return assign({}, state, {
@@ -56,6 +42,21 @@ export default createReducer(initialState, {
         result,
         ...state.results
       ]
+    });
+  },
+  [LOAD_SUCCESS]: (state, {username, repo, response}) => {
+    return assign({}, state, {
+      results: state.results.map((result) => {
+        if (repoName(username, repo) === repoName(result.username, result.repo)) {
+          return assign({}, result, {
+            requestPending: false,
+            shouldRelease: response.should_release,
+            aheadBy: response.ahead_by,
+          });
+        } else {
+          return result;
+        }
+      })
     });
   },
   [LOAD_FAIL]: (state, {error, username, repo}) => {
