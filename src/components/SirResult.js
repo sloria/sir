@@ -1,7 +1,6 @@
-import Card from 'material-ui/lib/card/card';
-import CardTitle from 'material-ui/lib/card/card-title';
 import CircularProgress from 'material-ui/lib/circular-progress';
 import React, {PropTypes as t} from 'react';
+import {Panel} from 'react-bootstrap';
 
 import {getCompareURL, repoName} from '../utils/github';
 
@@ -15,7 +14,8 @@ export default class SirResult extends React.Component {
     shouldRelease: t.bool,
     latestTag: t.string,
     aheadBy: t.number,
-    loading: t.bool
+    loading: t.bool,
+    children: t.any
   }
   static defaultProps = {
     loading: false
@@ -33,20 +33,28 @@ export default class SirResult extends React.Component {
         'Nothing to release (last release is the same as HEAD)'
     );
     const title = (
-      <span>
+      <h3>
         <a href={`https://github.com/${fullRepo}/`}>{fullRepo}</a>&nbsp; - &nbsp;
         <span className={shouldRelease ? 'text-success' : ''}>{yesOrNo}</span>
-      </span>
+      </h3>
     );
     return (
-      <Card>
+      <Panel>
+        <button type='button'
+          onClick={() => {console.log('dismissed');}}
+          type='button' className='close' aria-hidden='true' aria-label='Close'>
+          <span>&times;</span>
+        </button>
         {this.props.loading ?  <CircularProgress size={0.5} /> :
           (<span>
-            <CardTitle title={title} subtitle={subtitle} />
+            {title}
+            <span className='text-muted'>
+              {subtitle}
+            </span>
             {this.props.children}
           </span>)
         }
-      </Card>
+      </Panel>
     );
   }
 }

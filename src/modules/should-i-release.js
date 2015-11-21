@@ -72,7 +72,7 @@ export default createReducer(initialState, {
         results: updatedResults(state.results, username, repo, {
           requestPending: true,
         })
-      })
+      });
     }
   },
   [LOAD_SUCCESS]: (state, {username, repo, response}) => {

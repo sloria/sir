@@ -11,7 +11,8 @@ const sizeMap = {
 export default class MaterialIcon extends React.Component {
   static propTypes = {
     type: t.string.isRequired,
-    size: t.string
+    size: t.string,
+    style: t.object
   }
   static defaultProps = {
     size: 'md'

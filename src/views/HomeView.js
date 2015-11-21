@@ -103,7 +103,7 @@ export class HomeView extends React.Component {
                           {result.shouldRelease ?
                             <CardActions>
                               {/* TODO: Add icons */}
-                              <Button bsSize='sm' href={compareURL} target='_blank'>
+                              <Button className='btn-raised' bsSize='sm' href={compareURL} target='_blank'>
                                 <Icon style={{paddingRight: '5px'}} size='sm' type='action-launch' />
                                 See changes
                               </Button>
