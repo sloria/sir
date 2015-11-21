@@ -21,21 +21,21 @@ export default class SirResult extends React.Component {
     loading: false
   }
   render() {
-    const {username, repo} = this.props;
-    const yesOrNo = this.props.shouldRelease ? 'Yes' : 'No';
-    const fullRepo = repoName(username, repo);
+    const {username, repo, shouldRelease, aheadBy, latestTag} = this.props;
+    const yesOrNo = shouldRelease ? 'Yes' : 'No';
+    const fullRepo = repoName(username, repo, false);
     const compareURL = getCompareURL(username, repo, this.props.latestTag, 'HEAD');
 
     const subtitle = (
       this.props.aheadBy ?
-        <a href={compareURL}>{`${this.props.aheadBy} commits to release`}</a>
+        <a href={compareURL}>{`${aheadBy} commits since last release (${latestTag})`}</a>
       :
         'Nothing to release (last release is the same as HEAD)'
     );
     const title = (
       <span>
         <a href={`https://github.com/${fullRepo}/`}>{fullRepo}</a>&nbsp; - &nbsp;
-        <span className={this.props.shouldRelease ? 'text-success' : ''}>{yesOrNo}</span>
+        <span className={shouldRelease ? 'text-success' : ''}>{yesOrNo}</span>
       </span>
     );
     return (
