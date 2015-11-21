@@ -59,7 +59,13 @@ Runs unit tests with Karma and generates coverage reports.
 Similar to `npm run test`, but will watch for changes and re-run tests; does not generate coverage reports.
 
 #### `npm run lint`
-Runs ESLint against all `.js` files in `~/src`. This used to be a webpack preloader, but the browser console output could get fairly ugly. If you want development-time linting, consider using an `eslint` plugin for your text editor.
+Lint both server and client code.
+
+#### `npm run lint:client`
+Lint client-side code.
+
+#### `npm run lint:api`
+Lint server-side code.
 
 #### `npm run lint:tests`
 Lints all `.spec.js` files in of `~/tests`.

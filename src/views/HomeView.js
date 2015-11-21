@@ -32,7 +32,7 @@ export class HomeView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      errorMessage: false,
+      errorMessage: '',
       text: ''
     };
   }
@@ -72,7 +72,7 @@ export class HomeView extends React.Component {
             <form onSubmit={(e) => e.preventDefault()}>
               <SirTextInput
                 onSave={this.handleSave.bind(this)}
-                onChange={(e) => this.setState({text: e.target.value})}
+                onChange={(e) => this.setState({text: e.target.value, errorMessage: ''})}
                 onSaveInvalid={(text, msg) => this.setState({errorMessage: msg})}
                 isValid={this.validate.bind(this)}
                 placeholder='Type a GitHub repo and press Enter' />
@@ -86,7 +86,7 @@ export class HomeView extends React.Component {
             <ul style={{listStyle: 'none', paddingLeft: 0}}>
               {sirData.results.map((result) => {
                 return (
-                  <li style={{marginTop: '8px'}}>
+                  <li key={repoName(result.username, result.repo)} style={{marginTop: '8px'}}>
                     {
                       result.error ?
                         <ResponseError
@@ -97,6 +97,7 @@ export class HomeView extends React.Component {
                         <SirResult
                           username={result.username}
                           repo={result.repo}
+                          latestTag={result.latestTag}
                           loading={result.requestPending}
                           shouldRelease={result.shouldRelease}
                           aheadBy={result.aheadBy} />

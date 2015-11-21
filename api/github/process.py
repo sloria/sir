@@ -18,4 +18,5 @@ class RepoProcessor:
             base=latest_tag_sha,
             head='HEAD'
         )
+        comparison_json['latest_tag'] = tags_json[0]['name']
         return comparison_json

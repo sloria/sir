@@ -19,4 +19,6 @@ async def should_i_release(request):
         'repo': repo,
         'should_release': bool(ahead_by),
         'ahead_by': ahead_by,
+        'base_commit_sha': comparison_json['base_commit']['sha'],
+        'latest_tag': comparison_json['latest_tag']
     })

@@ -21,6 +21,7 @@ const initialState = {
   //   username: <string>,
   //   repo: <string>,
   //   shouldRelease: <bool>,
+  //   latestTag: <string>,
   //   aheadBy: <bool>,
   //   requestPending: <bool>
   //   error: <Error or null>
@@ -35,6 +36,7 @@ export default createReducer(initialState, {
       aheadBy: null,
       shouldRelease: null,
       requestPending: true,
+      latestTag: null,
       error: null
     };
     return assign({}, state, {
@@ -52,6 +54,7 @@ export default createReducer(initialState, {
             requestPending: false,
             shouldRelease: response.should_release,
             aheadBy: response.ahead_by,
+            latestTag: response.latest_tag
           });
         } else {
           return result;
