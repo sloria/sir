@@ -40,9 +40,12 @@ export default class SirResult extends React.Component {
     );
     return (
       <Card>
-        {this.props.loading ?
-          <CircularProgress size={0.5} /> :
-          <CardTitle title={title} subtitle={subtitle} />}
+        {this.props.loading ?  <CircularProgress size={0.5} /> :
+          (<span>
+            <CardTitle title={title} subtitle={subtitle} />
+            {this.props.children}
+          </span>)
+        }
       </Card>
     );
   }

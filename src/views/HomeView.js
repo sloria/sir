@@ -1,11 +1,12 @@
-import React from 'react';
-import {PropTypes as t} from 'react';
+import CardActions from 'material-ui/lib/card/card-actions';
+import {Button} from 'react-bootstrap';
+import React, {PropTypes as t} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as actions from 'modules/should-i-release';
-import {SirResult, SirTextInput, ResponseError} from '../components';
-import {repoName, validateRepoName} from '../utils/github';
+import {SirResult, SirTextInput, ResponseError, MaterialIcon as Icon} from '../components';
+import {getCompareURL, repoName, validateRepoName} from '../utils/github';
 
 // We define mapStateToProps and mapDispatchToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -81,6 +82,7 @@ export class HomeView extends React.Component {
           <div className='col-lg-12'>
             <ul style={{listStyle: 'none', paddingLeft: 0}}>
               {sirData.results.map((result) => {
+                const compareURL = getCompareURL(result.username, result.repo, result.latestTag, 'HEAD');
                 return (
                   <li key={repoName(result.username, result.repo)} style={{marginTop: '8px'}}>
                     {
@@ -96,7 +98,24 @@ export class HomeView extends React.Component {
                           latestTag={result.latestTag}
                           loading={result.requestPending}
                           shouldRelease={result.shouldRelease}
-                          aheadBy={result.aheadBy} />
+                          aheadBy={result.aheadBy}>
+
+                          {result.shouldRelease ?
+                            <CardActions>
+                              {/* TODO: Add icons */}
+                              <Button bsSize='sm' href={compareURL} target='_blank'>
+                                <Icon style={{paddingRight: '5px'}} size='sm' type='action-launch' />
+                                See changes
+                              </Button>
+                              <Button bsSize='sm' bsStyle='default' onClick={() => {this.props.actions.fetch(result.username, result.repo);}}>
+                                <Icon size='md' type='action-cached' />
+                              </Button>
+                            </CardActions>
+                            : ''
+                          }
+
+
+                        </SirResult>
                     }
                   </li>
                 );

@@ -47,21 +47,33 @@ function updatedResults(oldResults, username, repo, data) {
 
 export default createReducer(initialState, {
   [LOAD]: (state, {username, repo}) => {
-    const result = {
-      username: username,
-      repo: repo,
-      aheadBy: null,
-      shouldRelease: null,
-      requestPending: true,
-      latestTag: null,
-      error: null
-    };
-    return assign({}, state, {
-      results: [
-        result,
-        ...state.results
-      ]
-    });
+    const inList = (username && repo && state.results.filter((result) => {
+      return repoName(result.username, result.repo) === repoName(username, repo);
+    }).length);
+    // Add new result if repo isn't in list
+    if (!inList) {
+      const result = {
+        username: username,
+        repo: repo,
+        aheadBy: null,
+        shouldRelease: null,
+        requestPending: true,
+        latestTag: null,
+        error: null
+      };
+      return assign({}, state, {
+        results: [
+          result,
+          ...state.results
+        ]
+      });
+    } else {  // Set requestPending for existing result
+      return assign({}, state, {
+        results: updatedResults(state.results, username, repo, {
+          requestPending: true,
+        })
+      })
+    }
   },
   [LOAD_SUCCESS]: (state, {username, repo, response}) => {
     return assign({}, state, {

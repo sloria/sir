@@ -5,5 +5,6 @@
  *
  */
 export SirResult from './SirResult';
+export MaterialIcon from './MaterialIcon';
 export ResponseError from './ResponseError';
 export SirTextInput from './SirTextInput';
