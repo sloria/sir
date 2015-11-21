@@ -1,0 +1,34 @@
+# -*- coding: utf-8 -*-
+# vi: set ft=python :
+import asyncio
+import konch
+
+from api import settings
+from api.github.client import GitHubClient
+from api.github.process import RepoProcessor
+
+loop = asyncio.get_event_loop()
+client = GitHubClient(settings.GITHUB_CLIENT_ID, settings.GITHUB_CLIENT_SECRET)
+processor = RepoProcessor(client)
+
+# Available options:
+#   'context', 'banner', 'shell', 'prompt',
+#   'hide_context', 'ipy_extensions', 'ipy_autoreload'
+konch.config({
+    'context': {
+        'settings': settings,
+        'client': client,
+        'processor': processor,
+        'loop': loop,
+        'run': loop.run_until_complete,
+    },
+    'banner': 'sir: Your Open Source assistant',
+    'prompt': '[\\#] (sir) >>> ',
+    'ipy_autoreload': True,
+})
+
+def setup():
+    pass
+
+def teardown():
+    pass

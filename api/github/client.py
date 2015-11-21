@@ -54,3 +54,6 @@ class GitHubClient:
         return await self.make_request(
             '/repos/{username}/{repo}/compare/{base}...{head}'.format(**locals())
         )
+
+    async def rate_limit(self):
+        return await self.make_request('/rate_limit')

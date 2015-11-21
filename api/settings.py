@@ -1,9 +1,11 @@
-import os
+from envparse import env
 
-ENV = os.environ.get('NODE_ENV')
+env.read_envfile()  # Read .env
+
+ENV = env('NODE_ENV')
 DEBUG = ENV != 'production'
-PORT = os.environ.get('APIPORT', 3030)
+PORT = env.int('APIPORT', default=3030)
 URL_PREFIX = '/v1/'
 
-GITHUB_CLIENT_ID = os.environ.get('SIR_GITHUB_CLIENT_ID')
-GITHUB_CLIENT_SECRET = os.environ.get('SIR_GITHUB_CLIENT_SECRET')
+GITHUB_CLIENT_ID = env('SIR_GITHUB_CLIENT_ID')
+GITHUB_CLIENT_SECRET = env('SIR_GITHUB_CLIENT_SECRET')
