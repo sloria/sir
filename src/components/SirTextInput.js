@@ -10,6 +10,10 @@ export default class SirTextInput extends React.Component {
     onChange: t.func,
     text: t.string,
     placeholder: t.string,
+    help: t.string,
+    /**
+     * Validation function. May return a boolean or a string (error message)
+     */
     isValid: t.func
   }
   static defaultProps = {
@@ -24,22 +28,28 @@ export default class SirTextInput extends React.Component {
     };
   }
 
+  isValid() {
+    const isValid = this.props.isValid(this.state.text);
+    return isValid && typeof isValid !== 'string';
+  }
+
   handleSubmit(e) {
     const text = e.target.value.trim();
     if (e.which === ENTER) {
-      const isValid = this.props.isValid(text);
-      if (isValid && typeof isValid !== 'string') {
+      if (this.isValid()) {
         this.props.onSave(text);
         this.setState({text: ''});
       } else {
+        // isValid may return a string error message; pass this
+        // to onSaveInvalid
+        const isValid = this.props.isValid(this.state.text);
         this.props.onSaveInvalid(text, isValid);
       }
     }
   }
-
   handleChange(e) {
     const text = e.target.value;
-    const isValid = this.props.isValid(text)
+    const isValid = this.props.isValid(text);
     this.props.onChange(e);
     this.setState({text, isValid});
   }
@@ -48,7 +58,7 @@ export default class SirTextInput extends React.Component {
     return (
       <Input
         type='text'
-        bsStyle={this.props.isValid ? 'success' : 'error'}
+        bsStyle={this.isValid() ? 'success' : 'error'}
         bsSize='large'
         autoFocus='true'
         help={this.props.help}

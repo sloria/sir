@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import * as actions from 'modules/should-i-release';
 import {SirResult, SirTextInput, ResponseError} from '../components';
-import {repoName} from '../utils/github';
+import {repoName, validateRepoName} from '../utils/github';
 
 // We define mapStateToProps and mapDispatchToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -19,10 +19,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators(actions, dispatch)
 });
-
-function validateRepoName(text) {
-  return !text ||  /.+\/.+/.test(text);
-}
 
 export class HomeView extends React.Component {
   static propTypes = {

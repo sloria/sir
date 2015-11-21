@@ -1,15 +1,18 @@
 
-export function repoName(username, repo, lowercase=true) {
-  username = username.trim();
-  repo = repo.trim();
+export function repoName(username, repo, lowercase = true) {
+  let cleanUsername = username.trim();
+  let cleanRepo = repo.trim();
   if (lowercase) {
-    username = username.toLowerCase();
-    repo = repo.toLowerCase();
+    cleanUsername = username.toLowerCase();
+    cleanRepo = repo.toLowerCase();
   }
-  return `${username}/${repo}`;
+  return `${cleanUsername}/${cleanRepo}`;
 }
 
-export function getCompareURL(username, repo, base, head='HEAD') {
-  return `https://github.com/${username}/${repo}/compare/${base}...${head}`
+export function getCompareURL(username, repo, base, head = 'HEAD') {
+  return `https://github.com/${username}/${repo}/compare/${base}...${head}`;
 }
 
+export function validateRepoName(text) {
+  return !text ||  /.+\/.+/.test(text);
+}
