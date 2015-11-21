@@ -37,6 +37,15 @@ export class HomeView extends React.Component {
     const [username, repo] = text.split('/');
     this.props.actions.fetch(username.trim(), repo.trim());
   }
+  handleDismiss(e, username, repo) {
+    this.props.actions.remove(username, repo);
+  }
+  handleChange(e) {
+    if (this.props.shouldIRelease.error) {
+      this.props.actions.dismissError();
+    }
+    this.setState({text: e.target.value, errorMessage: ''});
+  }
   validate(text) {
     if (!text) {
       return true;
@@ -69,11 +78,18 @@ export class HomeView extends React.Component {
             <form onSubmit={(e) => e.preventDefault()}>
               <SirTextInput
                 onSave={this.handleSave.bind(this)}
-                onChange={(e) => this.setState({text: e.target.value, errorMessage: ''})}
+                onChange={this.handleChange.bind(this)}
                 onSaveInvalid={(text, msg) => this.setState({errorMessage: msg})}
                 isValid={this.validate.bind(this)}
                 help={this.state.errorMessage}
                 placeholder='Type a GitHub repo and press Enter' />
+
+              {
+                sirData.error ?
+                <ResponseError username={sirData.error.username}
+                  repo={sirData.error.repo}
+                  response={sirData.error.error.response} /> : ''
+              }
             </form>
           </div>
         </div>
@@ -84,39 +100,29 @@ export class HomeView extends React.Component {
               {sirData.results.map((result) => {
                 const compareURL = getCompareURL(result.username, result.repo, result.latestTag, 'HEAD');
                 return (
-                  <li key={repoName(result.username, result.repo)} style={{marginTop: '8px'}}>
-                    {
-                      result.error ?
-                        <ResponseError
-                          username={result.username}
-                          repo={result.repo}
-                          response={result.error.response} />
-                      :
-                        <SirResult
-                          username={result.username}
-                          repo={result.repo}
-                          latestTag={result.latestTag}
-                          loading={result.requestPending}
-                          shouldRelease={result.shouldRelease}
-                          aheadBy={result.aheadBy}>
+                  <li key={repoName(result.username, result.repo, true)} style={{marginTop: '8px'}}>
+                    <SirResult
+                      username={result.username}
+                      repo={result.repo}
+                      latestTag={result.latestTag}
+                      loading={result.requestPending}
+                      shouldRelease={result.shouldRelease}
+                      aheadBy={result.aheadBy}
+                      onDismiss={this.handleDismiss.bind(this)}>
 
-                          {result.shouldRelease ?
-                            <CardActions>
-                              {/* TODO: Add icons */}
-                              <Button className='btn-raised' bsSize='sm' href={compareURL} target='_blank'>
-                                <Icon style={{paddingRight: '5px'}} size='sm' type='action-launch' />
-                                See changes
-                              </Button>
-                              <Button bsSize='sm' bsStyle='default' onClick={() => {this.props.actions.fetch(result.username, result.repo);}}>
-                                <Icon size='md' type='action-cached' />
-                              </Button>
-                            </CardActions>
-                            : ''
-                          }
-
-
-                        </SirResult>
-                    }
+                      {result.shouldRelease ?
+                        <CardActions>
+                          <Button className='btn-raised' bsSize='sm' href={compareURL} target='_blank'>
+                            <Icon style={{paddingRight: '5px'}} size='sm' type='action-launch' />
+                            See changes
+                          </Button>
+                          <Button bsSize='sm' bsStyle='default' onClick={() => {this.props.actions.fetch(result.username, result.repo);}}>
+                            <Icon size='md' type='action-cached' />
+                          </Button>
+                        </CardActions>
+                        : ''
+                      }
+                    </SirResult>
                   </li>
                 );
               })}

@@ -12,9 +12,14 @@ const LOAD = `${ns}/LOAD`;
 const LOAD_SUCCESS = `${ns}/LOAD_SUCCESS`;
 const LOAD_FAIL = `${ns}/LOAD_FAIL`;
 
+const REMOVE = `${ns}/REMOVE`;
+
+const DISMISS_ERROR = `${ns}/DISMISS_ERROR`;
+
 // Reducer
 
 const initialState = {
+  error: null,
   // Each result is an object of the form
   // {
   //   username: <string>,
@@ -23,7 +28,6 @@ const initialState = {
   //   latestTag: <string>,
   //   aheadBy: <bool>,
   //   requestPending: <bool>
-  //   error: <Error or null>
   // }
   results: []
 };
@@ -58,8 +62,7 @@ export default createReducer(initialState, {
         aheadBy: null,
         shouldRelease: null,
         requestPending: true,
-        latestTag: null,
-        error: null
+        latestTag: null
       };
       return assign({}, state, {
         results: [
@@ -89,9 +92,27 @@ export default createReducer(initialState, {
   },
   [LOAD_FAIL]: (state, {error, username, repo}) => {
     return assign({}, state, {
-      results: updatedResults(state.results, username, repo,
-        {requestPending: false, error: error}
-      )
+      error: {
+        error,
+        username,
+        repo
+      },
+      // Remove result that errored
+      results: state.results.filter((result) => {
+        return repoName(username, repo, true) !== repoName(result.username, result.repo, true);
+      })
+    });
+  },
+  [REMOVE]: (state, {username, repo}) => {
+    return assign({}, state, {
+      results: state.results.filter((result) => {
+        return repoName(username, repo, true) !== repoName(result.username, result.repo, true);
+      })
+    });
+  },
+  [DISMISS_ERROR]: (state) => {
+    return assign({}, state, {
+      error: null
     });
   }
 });
@@ -129,4 +150,14 @@ export function fetch(username, repo) {
         dispatch(fail(err, username, repo));
       });
   };
+}
+
+export function remove(username, repo) {
+  return {
+    type: REMOVE, payload: {username, repo}
+  };
+}
+
+export function dismissError() {
+  return {type: DISMISS_ERROR};
 }

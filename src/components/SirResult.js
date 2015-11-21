@@ -15,10 +15,14 @@ export default class SirResult extends React.Component {
     latestTag: t.string,
     aheadBy: t.number,
     loading: t.bool,
-    children: t.any
+    children: t.any,
+    onDismiss: t.func
   }
   static defaultProps = {
     loading: false
+  }
+  handleDismiss(e) {
+    this.props.onDismiss(e, this.props.username, this.props.repo);
   }
   render() {
     const {username, repo, shouldRelease, aheadBy, latestTag} = this.props;
@@ -40,11 +44,14 @@ export default class SirResult extends React.Component {
     );
     return (
       <Panel>
-        <button type='button'
-          onClick={() => {console.log('dismissed');}}
-          type='button' className='close' aria-hidden='true' aria-label='Close'>
-          <span>&times;</span>
-        </button>
+        {
+          this.props.onDismiss ?
+          <button type='button'
+            onClick={this.handleDismiss.bind(this)}
+            type='button' className='close' aria-hidden='true' aria-label='Close'>
+            <span>&times;</span>
+          </button> : ''
+        }
         {this.props.loading ?  <CircularProgress size={0.5} /> :
           (<span>
             {title}
