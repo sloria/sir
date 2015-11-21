@@ -75,9 +75,9 @@ export class HomeView extends React.Component {
                 onChange={(e) => this.setState({text: e.target.value, errorMessage: ''})}
                 onSaveInvalid={(text, msg) => this.setState({errorMessage: msg})}
                 isValid={this.validate.bind(this)}
+                help={this.state.errorMessage}
                 placeholder='Type a GitHub repo and press Enter' />
             </form>
-            <span className='help-block'>{this.state.errorMessage}</span>
           </div>
         </div>
 

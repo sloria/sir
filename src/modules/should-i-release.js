@@ -15,7 +15,6 @@ const LOAD_FAIL = `${ns}/LOAD_FAIL`;
 // Reducer
 
 const initialState = {
-  error: null,
   // Each result is an object of the form
   // {
   //   username: <string>,
@@ -28,6 +27,24 @@ const initialState = {
   // }
   results: []
 };
+
+/**
+ * Helper to return an updated array of SIR results.
+ * Does not modify results in-place.
+ *
+ * @return array Array of updated results
+ */
+function updatedResults(oldResults, username, repo, data) {
+  return oldResults.map((result) => {
+    // Use repo name as unique identifier
+    if (repoName(username, repo, true) === repoName(result.username, result.repo, true)) {
+      return assign({}, result, data);
+    } else {
+      return result;
+    }
+  });
+}
+
 export default createReducer(initialState, {
   [LOAD]: (state, {username, repo}) => {
     const result = {
@@ -48,29 +65,21 @@ export default createReducer(initialState, {
   },
   [LOAD_SUCCESS]: (state, {username, repo, response}) => {
     return assign({}, state, {
-      results: state.results.map((result) => {
-        if (repoName(username, repo) === repoName(result.username, result.repo)) {
-          return assign({}, result, {
-            requestPending: false,
-            shouldRelease: response.should_release,
-            aheadBy: response.ahead_by,
-            latestTag: response.latest_tag
-          });
-        } else {
-          return result;
+      results: updatedResults(state.results, username, repo,
+        {
+          requestPending: false,
+          shouldRelease: response.should_release,
+          aheadBy: response.ahead_by,
+          latestTag: response.latest_tag
         }
-      })
+      )
     });
   },
   [LOAD_FAIL]: (state, {error, username, repo}) => {
     return assign({}, state, {
-      results: state.results.map((result) => {
-        if (repoName(username, repo) === repoName(result.username, result.repo)) {
-          return assign({}, result, { requestPending: false, error: error});
-        } else {
-          return result;
-        }
-      })
+      results: updatedResults(state.results, username, repo,
+        {requestPending: false, error: error}
+      )
     });
   }
 });
@@ -80,31 +89,20 @@ export default createReducer(initialState, {
 
 function request(username, repo) {
   return {
-    type: LOAD,
-    payload: {username, repo}
+    type: LOAD, payload: {username, repo}
   };
 }
 
 
 function success(username, repo, response) {
   return {
-    type: LOAD_SUCCESS,
-    payload: {
-      username,
-      repo,
-      response
-    }
+    type: LOAD_SUCCESS, payload: {username, repo, response}
   };
 }
 
 function fail(error, username, repo) {
   return {
-    type: LOAD_FAIL,
-    payload: {
-      error,
-      username,
-      repo
-    }
+    type: LOAD_FAIL, payload: {error, username, repo}
   };
 }
 
