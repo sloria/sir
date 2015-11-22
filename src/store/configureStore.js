@@ -7,24 +7,31 @@ import {
   compose,
   createStore
 } from 'redux';
+import {persistStore, autoRehydrate} from 'redux-persist';
 
 import rootReducer from '../modules/reducer';
 import routes from '../routes';
 
+const PERSISTENT_REDUCERS = [
+  'shouldIRelease'
+];
+
 export default function configureStore(initialState, debug = false) {
   let createStoreWithMiddleware;
 
-  const middleware = applyMiddleware(thunk);
+  const thunkMiddleware = applyMiddleware(thunk);
 
   if (debug) {
     createStoreWithMiddleware = compose(
-      middleware,
+      autoRehydrate(),
+      thunkMiddleware,
       reduxReactRouter({ routes, createHistory }),
       DevTools.instrument()
     );
   } else {
     createStoreWithMiddleware = compose(
-      middleware,
+      autoRehydrate(),
+      thunkMiddleware,
       reduxReactRouter({ routes, createHistory })
     );
   }
@@ -32,6 +39,7 @@ export default function configureStore(initialState, debug = false) {
   const store = createStoreWithMiddleware(createStore)(
     rootReducer, initialState
   );
+  persistStore(store, {whitelist: PERSISTENT_REDUCERS});
   if (module.hot) {
     module.hot.accept('../modules', () => {
       const nextRootReducer = require('../modules/reducer');
