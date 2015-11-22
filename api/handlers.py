@@ -3,8 +3,8 @@ from .github.client import GitHubClient, GitHubClientError
 from .github.process import RepoProcessor
 
 async def should_i_release(request):
-    config = request.app['config']
-    client = GitHubClient(config.GITHUB_CLIENT_ID, config.GITHUB_CLIENT_SECRET)
+    app = request.app
+    client = GitHubClient(app['GITHUB_CLIENT_ID'], app['GITHUB_CLIENT_SECRET'])
     processor = RepoProcessor(client)
     username = request.match_info['username']
     repo = request.match_info['repo']

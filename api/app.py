@@ -12,9 +12,9 @@ def create_app(settings_obj=None):
     settings_obj = settings_obj or settings
     config = Config()
     config.from_object(settings_obj)
-
     app = web.Application(debug=config.DEBUG)
-    app['config'] = config
+    # Store configuration as uppercased keys on app
+    app.update(config)
 
     # Set up routes
     # Enable CORS for all routes
