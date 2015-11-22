@@ -13,6 +13,9 @@ const LOAD_SUCCESS = `${ns}/LOAD_SUCCESS`;
 const LOAD_FAIL = `${ns}/LOAD_FAIL`;
 
 const REMOVE = `${ns}/REMOVE`;
+const REMOVE_ALL = `${ns}/REMOVE_ALL`;
+
+const REFRESH_ALL_START = `${ns}/REFRESH_ALL_START`;
 
 const DISMISS_ERROR = `${ns}/DISMISS_ERROR`;
 
@@ -114,6 +117,15 @@ export default createReducer(initialState, {
     return assign({}, state, {
       error: null
     });
+  },
+  [REMOVE_ALL]: (state) => {
+    return assign({}, state, {
+      results: [],
+      error: null
+    })
+  },
+  [REFRESH_ALL_START]: (state) => {
+    return state;
   }
 });
 
@@ -158,6 +170,26 @@ export function remove(username, repo) {
   };
 }
 
+export function removeAll() {
+  return {type: REMOVE_ALL};
+}
+
 export function dismissError() {
   return {type: DISMISS_ERROR};
+}
+
+
+function refreshAllStart() {
+  return {type: REFRESH_ALL_START};
+}
+
+export function refreshAll() {
+  return (dispatch, getState) => {
+    dispatch(refreshAllStart());
+    const {shouldIRelease} = getState();
+    const {results} = shouldIRelease;
+    results.forEach((result) => {
+      dispatch(fetch(result.username, result.repo));
+    });
+  }
 }

@@ -1,5 +1,4 @@
-import CardActions from 'material-ui/lib/card/card-actions';
-import {Button} from 'react-bootstrap';
+import {Button, ButtonGroup} from 'react-bootstrap';
 import React, {PropTypes as t} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -34,6 +33,7 @@ export class HomeView extends React.Component {
     };
   }
   handleSave(text) {
+    if (!text) { return; }
     const [username, repo] = text.split('/');
     this.props.actions.fetch(username.trim(), repo.trim());
   }
@@ -45,6 +45,14 @@ export class HomeView extends React.Component {
       this.props.actions.dismissError();
     }
     this.setState({text: e.target.value, errorMessage: ''});
+  }
+  renderActionButtons() {
+    return (
+      <div className='pull-right'>
+        <Button onClick={this.props.actions.refreshAll}>Refresh All</Button>
+        <Button onClick={this.props.actions.removeAll}>Clear All</Button>
+      </div>
+    );
   }
   validate(text) {
     if (!text) {
@@ -111,15 +119,15 @@ export class HomeView extends React.Component {
                       onDismiss={this.handleDismiss.bind(this)}>
 
                       {result.shouldRelease ?
-                        <CardActions>
+                        <div>
                           <Button className='btn-raised' bsSize='sm' href={compareURL} target='_blank'>
                             <Icon style={{paddingRight: '5px'}} size='sm' type='action-launch' />
                             See changes
                           </Button>
-                          <Button bsSize='sm' bsStyle='default' onClick={() => {this.props.actions.fetch(result.username, result.repo);}}>
+                          <Button bsSize='sm' bsStyle='link' onClick={() => {this.props.actions.fetch(result.username, result.repo);}}>
                             <Icon size='md' type='action-cached' />
                           </Button>
-                        </CardActions>
+                        </div>
                         : ''
                       }
                     </SirResult>
@@ -128,6 +136,7 @@ export class HomeView extends React.Component {
               })}
             </ul>
           </div>
+          {sirData.results.length ? this.renderActionButtons() : ''}
         </div>
       </div>
     );

@@ -37,13 +37,13 @@ export default class SirResult extends React.Component {
         'Nothing to release (last release is the same as HEAD)'
     );
     const title = (
-      <h3>
+      <h3 style={{marginTop: '3px'}}>
         <a href={`https://github.com/${fullRepo}/`}>{fullRepo}</a>&nbsp; - &nbsp;
         <span className={shouldRelease ? 'text-success' : ''}>{yesOrNo}</span>
       </h3>
     );
     return (
-      <Panel>
+      <Panel style={{marginBottom: '0px'}}>
         {
           this.props.onDismiss ?
           <button type='button'
