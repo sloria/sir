@@ -15,6 +15,7 @@ const LOAD_FAIL = `${ns}/LOAD_FAIL`;
 const REMOVE = `${ns}/REMOVE`;
 const REMOVE_ALL = `${ns}/REMOVE_ALL`;
 
+const REFRESH_START = `${ns}/REFRESH_START`;
 const REFRESH_ALL_START = `${ns}/REFRESH_ALL_START`;
 
 const DISMISS_ERROR = `${ns}/DISMISS_ERROR`;
@@ -53,6 +54,18 @@ function updatedResults(oldResults, username, repo, data) {
   });
 }
 
+/**
+ * Find first result that matches the given username and repo
+ */
+function findResult(results, username, repo) {
+  for (let i = 0, len = results.length; i < len; i++) {
+    const result = results[i];
+    if (repoName(result.username, result.repo, true) === repoName(username, repo, true)) {
+      return result;
+    }
+  }
+}
+
 export default createReducer(initialState, {
   [LOAD]: (state, {username, repo}) => {
     const inList = (username && repo && state.results.filter((result) => {
@@ -75,11 +88,19 @@ export default createReducer(initialState, {
           ...state.results
         ]
       });
-    } else {  // Set requestPending for existing result
+    } else {
+      // Move the existing result in front of all the others
+      const oldResult = findResult(state.results, username, repo);
+      const rest = state.results.filter((result) => {
+        return repoName(result.username, result.repo, true) !== repoName(username, repo, true);
+      });
+      // Also set requestPending to true
+      const newResults = [
+        assign({}, oldResult, {requestPending: true}),
+        ...rest
+      ];
       return assign({}, state, {
-        results: updatedResults(state.results, username, repo, {
-          requestPending: true,
-        })
+        results: newResults
       });
     }
   },
@@ -127,9 +148,14 @@ export default createReducer(initialState, {
       error: null
     });
   },
-  [REFRESH_ALL_START]: (state) => {
-    return state;
-  }
+  [REFRESH_START]: (state, {username, repo}) => {
+    return assign({}, state, {
+      results: updatedResults(state.results, username, repo, {
+        requestPending: true,
+      })
+    });
+  },
+  [REFRESH_ALL_START]: (state) => { return state; }
 });
 
 
@@ -167,6 +193,23 @@ export function fetch(username, repo) {
   };
 }
 
+function refreshStart(username, repo) {
+  return {type: REFRESH_START, payload: {username, repo}};
+}
+
+export function refresh(username, repo) {
+  return (dispatch) => {
+    dispatch(refreshStart(username, repo));
+    client.get(`/should_i_release/${username}/${repo}/`)
+      .then((res) => {
+        dispatch(success(username, repo, res));
+      })
+      .catch((err) => {
+        dispatch(fail(err, username, repo));
+      });
+  };
+}
+
 export function remove(username, repo) {
   return {
     type: REMOVE, payload: {username, repo}
@@ -192,7 +235,7 @@ export function refreshAll() {
     const {shouldIRelease} = getState();
     const {results} = shouldIRelease;
     results.forEach((result) => {
-      dispatch(fetch(result.username, result.repo));
+      dispatch(refresh(result.username, result.repo));
     });
   };
 }

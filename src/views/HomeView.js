@@ -47,16 +47,6 @@ export class HomeView extends React.Component {
     this.setState({text: e.target.value, errorMessage: ''});
   }
   validate(text) {
-    if (!text) {
-      return true;
-    }
-    const [username, repo] = text.split('/');
-    const inList = (username && repo && this.props.shouldIRelease.results.filter((result) => {
-      return repoName(result.username, result.repo) === repoName(username, repo);
-    }).length);
-    if (inList) {
-      return 'Already in list';
-    }
     if (text && !validateRepoName(text)) {
       return 'Invalid repo name';
     }
@@ -116,7 +106,7 @@ export class HomeView extends React.Component {
                       lastUpdated={result.lastUpdated}
                       shouldRelease={result.shouldRelease}
                       aheadBy={result.aheadBy}
-                      onRefresh={() => {this.props.actions.fetch(result.username, result.repo);}}
+                      onRefresh={() => {this.props.actions.refresh(result.username, result.repo);}}
                       onDismiss={this.handleDismiss.bind(this)} />
                   </li>
                 );

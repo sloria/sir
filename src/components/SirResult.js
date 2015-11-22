@@ -16,7 +16,7 @@ export default class SirResult extends React.Component {
     shouldRelease: t.bool,
     latestTag: t.string,
     aheadBy: t.number,
-    lastUpdated: t.instanceOf(Date),
+    lastUpdated: t.oneOfType([t.string, t.instanceOf(Date)]),
     loading: t.bool,
     children: t.any,
     onRefresh: t.func,
