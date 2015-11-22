@@ -1,7 +1,9 @@
 import CircularProgress from 'material-ui/lib/circular-progress';
 import React, {PropTypes as t} from 'react';
-import {Panel} from 'react-bootstrap';
+import {Panel, Button} from 'react-bootstrap';
+import moment from 'moment';
 
+import {MaterialIcon as Icon} from '../components';
 import {getCompareURL, repoName} from '../utils/github';
 
 /**
@@ -14,8 +16,10 @@ export default class SirResult extends React.Component {
     shouldRelease: t.bool,
     latestTag: t.string,
     aheadBy: t.number,
+    lastUpdated: t.instanceOf(Date),
     loading: t.bool,
     children: t.any,
+    onRefresh: t.func,
     onDismiss: t.func
   }
   static defaultProps = {
@@ -57,8 +61,21 @@ export default class SirResult extends React.Component {
             {title}
             <span className='text-muted'>
               {subtitle}
+              {!shouldRelease ? <span className='text-muted pull-right'>Last updated {moment(this.props.lastUpdated).fromNow()}</span> : ''}
             </span>
-            {this.props.children}
+            {shouldRelease ?
+              <div>
+                <Button className='btn-raised' bsSize='sm' href={compareURL} target='_blank'>
+                  <Icon style={{paddingRight: '5px'}} size='sm' type='action-launch' />
+                  See changes
+                </Button>
+                <Button bsSize='sm' bsStyle='link' onClick={this.props.onRefresh}>
+                  <Icon size='md' type='action-cached' />
+                </Button>
+                <span style={{marginTop: '30px'}} className='text-muted pull-right'>Last updated {moment(this.props.lastUpdated).fromNow()}</span>
+              </div>
+              : ''
+            }
           </span>)
         }
       </Panel>

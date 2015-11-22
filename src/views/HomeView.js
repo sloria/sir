@@ -1,11 +1,11 @@
-import {Button, ButtonGroup} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 import React, {PropTypes as t} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as actions from 'modules/should-i-release';
-import {SirResult, SirTextInput, ResponseError, MaterialIcon as Icon} from '../components';
-import {getCompareURL, repoName, validateRepoName} from '../utils/github';
+import {SirResult, SirTextInput, ResponseError} from '../components';
+import {repoName, validateRepoName} from '../utils/github';
 
 // We define mapStateToProps and mapDispatchToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -46,14 +46,6 @@ export class HomeView extends React.Component {
     }
     this.setState({text: e.target.value, errorMessage: ''});
   }
-  renderActionButtons() {
-    return (
-      <div className='pull-right'>
-        <Button onClick={this.props.actions.refreshAll}>Refresh All</Button>
-        <Button onClick={this.props.actions.removeAll}>Clear All</Button>
-      </div>
-    );
-  }
   validate(text) {
     if (!text) {
       return true;
@@ -69,6 +61,14 @@ export class HomeView extends React.Component {
       return 'Invalid repo name';
     }
     return true;
+  }
+  renderActionButtons() {
+    return (
+      <div className='pull-right'>
+        <Button onClick={this.props.actions.refreshAll}>Refresh All</Button>
+        <Button onClick={this.props.actions.removeAll}>Clear All</Button>
+      </div>
+    );
   }
   render() {
     const sirData = this.props.shouldIRelease;
@@ -106,7 +106,6 @@ export class HomeView extends React.Component {
           <div className='col-lg-12'>
             <ul style={{listStyle: 'none', paddingLeft: 0}}>
               {sirData.results.map((result) => {
-                const compareURL = getCompareURL(result.username, result.repo, result.latestTag, 'HEAD');
                 return (
                   <li key={repoName(result.username, result.repo, true)} style={{marginTop: '8px'}}>
                     <SirResult
@@ -114,23 +113,11 @@ export class HomeView extends React.Component {
                       repo={result.repo}
                       latestTag={result.latestTag}
                       loading={result.requestPending}
+                      lastUpdated={result.lastUpdated}
                       shouldRelease={result.shouldRelease}
                       aheadBy={result.aheadBy}
-                      onDismiss={this.handleDismiss.bind(this)}>
-
-                      {result.shouldRelease ?
-                        <div>
-                          <Button className='btn-raised' bsSize='sm' href={compareURL} target='_blank'>
-                            <Icon style={{paddingRight: '5px'}} size='sm' type='action-launch' />
-                            See changes
-                          </Button>
-                          <Button bsSize='sm' bsStyle='link' onClick={() => {this.props.actions.fetch(result.username, result.repo);}}>
-                            <Icon size='md' type='action-cached' />
-                          </Button>
-                        </div>
-                        : ''
-                      }
-                    </SirResult>
+                      onRefresh={() => {this.props.actions.fetch(result.username, result.repo);}}
+                      onDismiss={this.handleDismiss.bind(this)} />
                   </li>
                 );
               })}

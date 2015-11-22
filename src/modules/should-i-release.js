@@ -30,7 +30,8 @@ const initialState = {
   //   shouldRelease: <bool>,
   //   latestTag: <string>,
   //   aheadBy: <bool>,
-  //   requestPending: <bool>
+  //   requestPending: <bool>,
+  //   lastUpdated: <Date>
   // }
   results: []
 };
@@ -65,7 +66,8 @@ export default createReducer(initialState, {
         aheadBy: null,
         shouldRelease: null,
         requestPending: true,
-        latestTag: null
+        latestTag: null,
+        lastUpdated: null
       };
       return assign({}, state, {
         results: [
@@ -88,7 +90,8 @@ export default createReducer(initialState, {
           requestPending: false,
           shouldRelease: response.should_release,
           aheadBy: response.ahead_by,
-          latestTag: response.latest_tag
+          latestTag: response.latest_tag,
+          lastUpdated: new Date()
         }
       )
     });
@@ -122,7 +125,7 @@ export default createReducer(initialState, {
     return assign({}, state, {
       results: [],
       error: null
-    })
+    });
   },
   [REFRESH_ALL_START]: (state) => {
     return state;
@@ -191,5 +194,5 @@ export function refreshAll() {
     results.forEach((result) => {
       dispatch(fetch(result.username, result.repo));
     });
-  }
+  };
 }
