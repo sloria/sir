@@ -18,7 +18,8 @@
     "test:client": "node ./node_modules/karma/bin/karma start",
     "test:api": "py.test api",
     "test:dev": "npm run test -- --watch",
-    "deploy": "npm run lint && npm run test && npm run compile"
+    "deploy": "npm run lint && npm run test && npm run compile",
+    "setup:dev": "npm install && pip install -r api/dev-requirements.txt"
   },
   "author": "Steven Loria",
   "license": "MIT",

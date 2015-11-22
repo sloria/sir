@@ -1,10 +1,9 @@
 from aiohttp_utils import Response
-from .github.client import GitHubClient, GitHubClientError
+from .github.client import GitHubClientError
 from .github.process import RepoProcessor
 
 async def should_i_release(request):
-    app = request.app
-    client = GitHubClient(app['GITHUB_CLIENT_ID'], app['GITHUB_CLIENT_SECRET'])
+    client = request.app['github']
     processor = RepoProcessor(client)
     username = request.match_info['username']
     repo = request.match_info['repo']
