@@ -2,11 +2,7 @@ import assert from 'assert';
 
 describe('(Framework) Karma Plugins', function () {
   it('Should expose "expect" globally.', function () {
-    assert.equal(typeof expect, 'function');
-  });
-
-  it('Should expose "should" globally.', function () {
-    assert.equal(typeof should, 'object');
+    assert.equal(typeof assert, 'function');
   });
 
   it('Should have chai-as-promised helpers.', function () {

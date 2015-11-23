@@ -52,7 +52,7 @@ export default class SirResult extends React.Component {
           this.props.onDismiss ?
           <button type='button'
             onClick={this.handleDismiss.bind(this)}
-            type='button' className='close' aria-hidden='true' aria-label='Close'>
+            className='close' aria-hidden='true' aria-label='Close'>
             <span>&times;</span>
           </button> : ''
         }

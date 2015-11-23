@@ -14,5 +14,5 @@ export function getCompareURL(username, repo, base, head = 'HEAD') {
 }
 
 export function validateRepoName(text) {
-  return !text ||  /.+\/.+/.test(text);
+  return /.+\/.+/.test(text);
 }

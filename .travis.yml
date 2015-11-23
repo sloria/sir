@@ -1,9 +1,13 @@
-language: node_js
-node_js:
-  - "4.0"
+language: python
+sudo: false
+
+python:
+  - "3.5"
 
 install:
-  - npm install
+  # Install both python and node dependencies
+  - npm run setup
 
 script:
+  # This will run both python and node tests
   - NODE_ENV=production npm run deploy

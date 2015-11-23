@@ -3,6 +3,8 @@ import TestUtils              from 'react-addons-test-utils';
 import { bindActionCreators } from 'redux';
 import { HomeView }           from 'views/HomeView';
 
+sinon.assert.expose(assert, {prefix: ''});
+
 function shallowRender (component) {
   const renderer = TestUtils.createRenderer();
 
@@ -18,60 +20,54 @@ function shallowRenderWithProps (props = {}) {
   return shallowRender(<HomeView {...props} />);
 }
 
-describe('(View) Home', function () {
+function pressEnter(node) {
+  TestUtils.Simulate.keyDown(node, {key: "Enter", keyCode: 13, which: 13});
+}
+
+describe('(View) Home', () => {
   let _component, _rendered, _props, _spies;
 
-  beforeEach(function () {
+  beforeEach(() => {
     _spies = {};
     _props = {
       actions : bindActionCreators({
-        increment : (_spies.increment = sinon.spy())
-      }, _spies.dispatch = sinon.spy())
+        fetch: (_spies.fetch = sinon.spy()),
+        refresh: (_spies.refresh = sinon.spy()),
+        remove: (_spies.remove = sinon.spy()),
+        removeAll: (_spies.removeAll = sinon.spy()),
+        refreshAll: (_spies.refreshAll = sinon.spy())
+      }, _spies.dispatch = sinon.spy()),
+      shouldIRelease: {
+        error: null,
+        results: []
+      }
     };
 
     _component = shallowRenderWithProps(_props);
     _rendered  = renderWithProps(_props);
   });
 
-  it('Should render as a <div>.', function () {
-    expect(_component.type).to.equal('div');
+  it('should render as a <div>.', () => {
+    assert.equal(_component.type, 'div');
   });
 
-  it('Should include an <h1> with welcome text.', function () {
+  it('should include an <h1> with header text.', () => {
     const h1 = TestUtils.findRenderedDOMComponentWithTag(_rendered, 'h1');
-
-    expect(h1).to.exist;
-    expect(h1.textContent).to.match(/Welcome to the React Redux Starter Kit/);
+    assert.ok(h1);
+    assert.match(h1.textContent, /Should I release?/);
   });
 
-  it('Should render with an <h2> that includes Sample Counter text.', function () {
-    const h2 = TestUtils.findRenderedDOMComponentWithTag(_rendered, 'h2');
-
-    expect(h2).to.exist;
-    expect(h2.textContent).to.match(/Sample Counter/);
+  it('should include an input', () => {
+    const input = TestUtils.findRenderedDOMComponentWithTag(_rendered, 'input');
+    assert.ok(input);
   });
 
-  it('Should render props.counter at the end of the sample counter <h2>.', function () {
-    const h2 = TestUtils.findRenderedDOMComponentWithTag(
-      renderWithProps({ ..._props, counter : 5 }), 'h2'
-    );
-
-    expect(h2).to.exist;
-    expect(h2.textContent).to.match(/5$/);
-  });
-
-  it('Should render an "Increment" button.', function () {
-    const btn = TestUtils.findRenderedDOMComponentWithTag(_rendered, 'button');
-
-    expect(btn).to.exist;
-    expect(btn.textContent).to.match(/Increment/);
-  });
-
-  it('Should dispatch an action when "Increment" button is clicked.', function () {
-    const btn = TestUtils.findRenderedDOMComponentWithTag(_rendered, 'button');
-
-    _spies.dispatch.should.have.not.been.called;
-    TestUtils.Simulate.click(btn);
-    _spies.dispatch.should.have.been.called;
+  it('should dispatch fetch action when input entered', () => {
+    const input = TestUtils.findRenderedDOMComponentWithTag(_rendered, 'input');
+    input.value = 'rackt/redux';
+    TestUtils.Simulate.change(input);
+    pressEnter(input);
+    assert.called(_spies.fetch);
+    assert.calledWith(_spies.fetch, 'rackt', 'redux');
   });
 });

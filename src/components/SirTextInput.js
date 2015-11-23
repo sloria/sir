@@ -60,10 +60,9 @@ export default class SirTextInput extends React.Component {
         type='text'
         bsStyle={this.isValid() ? 'success' : 'error'}
         bsSize='large'
-        autoFocus='true'
+        autoFocus
         help={this.props.help}
         value={this.state.text}
-        onChange={this.props.onChange}
         placeholder={this.props.placeholder}
         onChange={this.handleChange.bind(this)}
         onKeyDown={this.handleSubmit.bind(this)}

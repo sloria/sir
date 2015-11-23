@@ -17,9 +17,9 @@
     "test": "npm run test:client && npm run test:api",
     "test:client": "node ./node_modules/karma/bin/karma start",
     "test:api": "py.test api",
-    "test:dev": "npm run test -- --watch",
+    "test:dev": "npm run test:client -- --watch",
     "deploy": "npm run lint && npm run test && npm run compile",
-    "setup:dev": "npm install && pip install -r api/dev-requirements.txt"
+    "setup": "npm install && pip install -r api/dev-requirements.txt"
   },
   "author": "Steven Loria",
   "license": "MIT",
@@ -52,7 +52,7 @@
     "babel-runtime": "^5.8.20",
     "chai-as-promised": "^5.1.0",
     "concurrently": "^1.0.0",
-    "css-loader": "^0.21.0",
+    "css-loader": "^0.23.0",
     "eslint": "^1.0.0",
     "eslint-config-airbnb": "^1.0.0",
     "eslint-plugin-react": "^3.3.1",
@@ -63,6 +63,7 @@
     "karma": "^0.13.8",
     "karma-chai": "^0.1.0",
     "karma-chai-as-promised": "^0.1.2",
+    "karma-chrome-launcher": "^0.2.1",
     "karma-coverage": "^0.5.0",
     "karma-mocha": "^0.2.0",
     "karma-phantomjs-launcher": "^0.2.1",
