@@ -3,7 +3,7 @@ from .github.client import GitHubClientError
 from .github.process import RepoProcessor
 
 async def should_i_release(request):
-    client = request.app['github']
+    client = request.app['github_client']
     processor = RepoProcessor(client)
     username = request.match_info['username']
     repo = request.match_info['repo']

@@ -8,7 +8,8 @@ from api.github.client import GitHubClient
 from api.github.process import RepoProcessor
 
 loop = asyncio.get_event_loop()
-client = GitHubClient(settings.GITHUB_CLIENT_ID, settings.GITHUB_CLIENT_SECRET)
+client = GitHubClient(settings.GITHUB['CLIENT_ID'],
+                      settings.GITHUB['CLIENT_SECRET'])
 processor = RepoProcessor(client)
 
 # Available options:

@@ -15,6 +15,7 @@ from api.github.client import GitHubClient
 class TestConfig:
     ENV = 'testing'
     DEBUG = True
+    CACHE = {'STRATEGY': 'simple', 'PARAMS': {}}
 
 
 class BaseMockGitHubClient(GitHubClient):
