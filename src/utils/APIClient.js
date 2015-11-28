@@ -1,25 +1,8 @@
-/**
- * API client for sending JSON requests to the API.
- * Automatically formats the URL with the correct host, port,
- * protocol, and API Prefix.
- *
- * Usage:
- *
- *   const client = new APIClient();
- *   client.get('/repos/')
- *    .then((data) => {
- *        console.log(data);
- *    })
- */
 import fetch from 'isomorphic-fetch';
 
 const API_PREFIX = '/v1';
 // Use variables from config to build API URL
-let API_BASE = __APIHOST__;
-if (__APIPORT__) {
-  API_BASE += ':' + __APIPORT__;
-}
-
+const API_BASE = __APIHOST__;
 const USE_HTTPS = __PROD__;
 
 const PROTOCOL = USE_HTTPS ? 'https://' : 'http://';

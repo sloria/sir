@@ -66,8 +66,7 @@ config.set('globals', {
   '__PROD__'     : config.get('env') === 'production',
   '__DEBUG__'    : config.get('env') === 'development' && !argv.no_debug,
   '__DEBUG_NW__' : !!argv.nw,
-  '__APIHOST__': process.env.APIHOST || JSON.stringify('localhost'),
-  '__APIPORT__': process.env.APIPORT || 3030
+  '__APIHOST__': JSON.stringify(process.env.APIHOST || 'localhost:3030'),
 });
 
 // ------------------------------------

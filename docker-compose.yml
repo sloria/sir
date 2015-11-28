@@ -1,0 +1,27 @@
+api:
+  restart: always
+  build: .
+  links:
+    - redis
+  env_file: .env
+  expose:
+    - "5000"
+  volumes:
+    - /usr/src/app/dist
+  command: /gunicorn.sh
+
+redis:
+  restart: always
+  image: redis:3.0
+
+nginx:
+  restart: always
+  build: ./compose/nginx
+  volumes:
+    - /www/static
+  volumes_from:
+    - api
+  links:
+    - api
+  ports:
+    - "80:80"
