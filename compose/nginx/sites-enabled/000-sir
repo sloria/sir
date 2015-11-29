@@ -5,11 +5,9 @@ server {
   access_log /var/log/nginx/000-sir.log;
   charset utf-8;
 
-  root /usr/src/app/dist;
-
   location / {
     # checks for static file, if not found proxy to app
-    try_files $uri $uri.html $uri/ @proxy_to_app;
+    try_files $uri @proxy_to_app;
   }
 
   location @proxy_to_app {

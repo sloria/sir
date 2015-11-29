@@ -1,75 +1,93 @@
 # sir: Your open source assistant
 
-Requirements
-------------
+## Requirements
 
 - Node `^4.0.0` or `^5.0.0` ([npm3](https://www.npmjs.com/package/npm3) recommended).
 - Python 3.5
 
-Getting Started
----------------
+## Getting started
+
+### Set up GitHub credentials
+
+Create a Developer App on GitHub and add the following variables to a ``.env`` file in the root project directory (NOTE: ``.env`` will not be versioned).
+
+```shell
+SIR_GITHUB_CLIENT_ID='your-client-id'
+SIR_GITHUB_CLIENT_SECRET='your-client-secret'
+```
+
+### Start the API server
+
+#### With Docker
+
+```shell
+docker-compose -f docker-compose-dev.yml build
+docker-compose -f docker-compose-dev.yml up
+```
+
+Set the ``APIHOST`` environment variable to the IP of the Docker host machine.
+
+```shell
+# Assuming a virtual machine named 'dev'
+docker-machine ip dev
+# => 192.168.99.100
+```
+
+Add the following to your ``.env`` file.
+
+```shell
+APIHOST=192.168.99.100
+```
+
+#### Without Docker
+
+Requires Python 3.5 and Redis.
+
+```shell
+# After creating and activating a new virtual environment
+pip install -r requirements-dev.txt
+invoke server
+```
+
+Add the following to your ``.env`` file.
+
+```shell
+APIHOST=localhost:5000
+```
+
+### Start the frontend app
 
 Install requirements:
 
 ```shell
 npm install
-pip install -r api/requirements.txt
 ```
-
-Create a Developer App on GitHub and add the following envvars:
-
-```shell
-export SIR_GITHUB_CLIENT_ID='your-client-id'
-export SIR_GITHUB_CLIENT_SECRET='your-client-secret'
-```
-
 Start the app:
 
 ```shell
 npm start
 ```
 
-Usage
------
+Browse to http://localhost:3000 to view the app.
 
-#### `npm start`
-Runs the webpack build system with webpack-dev-server (by default found at `localhost:3000`) and run the API server in development mode concurrently.
+## Running tests
 
-#### `npm run dev`
-Run the client-side app with webpack-dev-server.
+### API tests
 
-#### `npm run dev:api`
-Run the API server.
+#### With Docker
 
-#### `npm run dev:nw`
-Same as `npm run start` but opens the debug tools in a new window.
+```shell
+docker-compose run api inv test
+```
 
-**Note:** you'll need to allow popups in Chrome, or you'll see an error: [issue 110](https://github.com/davezuko/react-redux-starter-kit/issues/110)
+#### Without Docker
 
-#### `npm run dev:no-debug`
-Same as `npm run start` but disables devtools.
+```shell
+invoke test
+```
 
-#### `npm run compile`
-Runs the webpack build system with your current NODE_ENV and compiles the application to disk (`~/dist`).
+## Client-side tests
 
-#### `npm run test`
-Runs unit tests with Karma and generates coverage reports.
-
-#### `npm run test:dev`
-Similar to `npm run test`, but will watch for changes and re-run tests; does not generate coverage reports.
-
-#### `npm run lint`
-Lint both server and client code.
-
-#### `npm run lint:client`
-Lint client-side code.
-
-#### `npm run lint:api`
-Lint server-side code.
-
-#### `npm run lint:tests`
-Lints all `.spec.js` files in of `~/tests`.
-
-#### `npm run deploy`
-Helper script to run linter, tests, and then, on success, compile your application to disk.
-
+```shell
+npm test
+```

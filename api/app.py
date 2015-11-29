@@ -35,6 +35,3 @@ def create_app(settings_obj=None) -> web.Application:
     github_plugin.setup(app)
 
     return app
-
-# gunicorn api.app:app --bind localhost:8080 --worker-class aiohttp.worker.GunicornWebWorker
-app = create_app()

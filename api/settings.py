@@ -2,7 +2,7 @@ from envparse import env
 
 env.read_envfile()  # Read .env
 
-ENV = env('NODE_ENV')
+ENV = env.str('NODE_ENV', default='production')
 DEBUG = ENV != 'production'
 
 CACHE = {
