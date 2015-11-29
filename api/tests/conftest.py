@@ -11,6 +11,7 @@ sys.path.insert(0, os.path.join(HERE, '..', '..'))
 
 from api.app import create_app
 from api.github.client import GitHubClient
+from api.github.plugin import APP_CLIENT_KEY as GITHUB_APP_KEY
 
 class TestConfig:
     ENV = 'testing'
@@ -41,7 +42,7 @@ def make_app():
     def maker(github=None):
         app = create_app(TestConfig)
         # Prevent any inadvertent requests
-        app['github'] = github or BaseMockGitHubClient('id', 'secret')
+        app[GITHUB_APP_KEY] = github or BaseMockGitHubClient('id', 'secret')
         return app
     return maker
 

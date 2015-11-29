@@ -5,9 +5,10 @@ python:
   - "3.5"
 
 install:
-  # Install both python and node dependencies
-  - npm run setup
+  - npm install
+  - pip install -r requirements-dev.txt
 
 script:
-  # This will run both python and node tests
-  - NODE_ENV=production npm run deploy
+  - NODE_ENV=production npm run lint
+  - NODE_ENV=production npm test
+  - invoke test

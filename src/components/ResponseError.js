@@ -4,6 +4,8 @@ import React, {PropTypes as t} from 'react';
 
 import {repoName} from '../utils/github';
 
+const DEFAULT_MESSAGE = 'The SIR service could not be reached at this time. Please try again later.';
+
 /**
  * Render an error response from the SIR API.
  */
@@ -11,17 +13,21 @@ export default class ResponseError extends React.Component {
   static propTypes = {
     username: t.string.isRequired,
     repo: t.string.isRequired,
-    response: t.object.isRequired
+    response: t.object
   }
   render() {
     let text;
-    switch (this.props.response.status) {
-    case 404:
-      const fullRepoName = repoName(this.props.username, this.props.repo);
-      text = `Could not find repo: ${fullRepoName}`;
-      break;
-    default:
-      text = 'Sorry, an unexpected error occurred. Please try again later.';
+    if (!this.props.response) {
+      text = DEFAULT_MESSAGE;
+    } else {
+      switch (this.props.response.status) {
+      case 404:
+        const fullRepoName = repoName(this.props.username, this.props.repo);
+        text = `Could not find repo: ${fullRepoName}`;
+        break;
+      default:
+        text = DEFAULT_MESSAGE;
+      }
     }
     return (
       <Card>
@@ -32,4 +38,3 @@ export default class ResponseError extends React.Component {
     );
   }
 }
-

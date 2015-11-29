@@ -1,35 +1,35 @@
-from unittest import mock
 import json
 import os
 
 import pytest
 
-from api.github.client import GitHubClient
 from api.github import process
-from api.tests.conftest import async_test
-
+from api.tests.conftest import async_test, BaseMockGitHubClient
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
-def patch_client_method_with_response(client_method, json_file):
-    client_import_path = 'api.github.client.GitHubClient'
-    mock_method = mock.patch('.'.join([client_import_path, client_method]))
-    with open(os.path.join(HERE, 'responses', json_file)) as fp:
-        mock_method.return_value = json.load(fp)
-    return mock_method
+class MockGitHubClient(BaseMockGitHubClient):
 
-@pytest.fixture(autouse=True)
-def mock_responses():
-    patch_client_method_with_response('user_repos', 'user_repos.json')
-    patch_client_method_with_response('repo_tags', 'repo_tags.json')
-    patch_client_method_with_response('compare', 'compare.json')
+    def _response_from_file(self, json_file):
+        with open(os.path.join(HERE, 'responses', json_file)) as fp:
+            ret = json.load(fp)
+        return ret
+
+    async def repo_tags(self, *args, **kwargs):
+        return self._response_from_file('repo_tags.json')
+
+    async def user_repos(self, *args, **kwargs):
+        return self._response_from_file('user_repos.json')
+
+    async def compare(self, *args, **kwargs):
+        return self._response_from_file('compare.json')
 
 
 class TestRepoProcessor:
 
     @pytest.fixture()
     def client(self):
-        return GitHubClient('myid', 'mysecret')
+        return MockGitHubClient('myid', 'mysecret')
 
     @pytest.fixture()
     def processor(self, client):

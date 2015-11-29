@@ -12,8 +12,8 @@
     "dev:nw": "npm run dev -- --nw",
     "dev:no-debug": "npm run dev -- --no_debug",
     "test": "node ./node_modules/karma/bin/karma start",
-    "test:dev": "npm run test:client -- --watch",
-    "deploy": "npm run lint && npm run test && npm run compile"
+    "test:dev": "npm run test -- --watch",
+    "deploy": "NODE_ENV=production npm run lint && npm run test && npm run compile && surge -p dist -d sir.surge.sh"
   },
   "author": "Steven Loria",
   "license": "MIT",

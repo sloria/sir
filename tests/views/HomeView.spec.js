@@ -67,7 +67,7 @@ describe('(View) Home', () => {
     input.value = 'rackt/redux';
     TestUtils.Simulate.change(input);
     pressEnter(input);
-    assert.called(_spies.fetch);
-    assert.calledWith(_spies.fetch, 'rackt', 'redux');
+    assert.isTrue(_spies.fetch.called);
+    assert.isTrue(_spies.fetch.calledWith('rackt', 'redux'));
   });
 });
