@@ -1,6 +1,7 @@
 import { createReducer }     from '../utils/redux';
 import APIClient from '../utils/APIClient';
 import {repoName} from '../utils/github';
+import {REHYDRATE_COMPLETE} from 'redux-persist/constants';
 
 const assign = Object.assign;
 
@@ -155,7 +156,11 @@ export default createReducer(initialState, {
       })
     });
   },
-  [REFRESH_ALL_START]: (state) => { return state; }
+  [REFRESH_ALL_START]: (state) => { return state; },
+  [REHYDRATE_COMPLETE]: (state) => {
+    // Clear error when reloading state from local storage
+    return assign({}, state, {error: null});
+  },
 });
 
 
