@@ -1,7 +1,6 @@
 server {
-
   listen 80;
-  server_name example.org;
+  server_name sir.sloria.io;
   access_log /var/log/nginx/000-sir.log;
   charset utf-8;
 
@@ -16,5 +15,4 @@ server {
     proxy_redirect off;
     proxy_pass   http://api:5000;
   }
-
 }

@@ -1,20 +1,36 @@
-# sir: Your open source assistant
+# sir
 
-## Requirements
+![screenshot](https://dl.dropboxusercontent.com/u/1693233/github/sir.png "sir")
 
-- Node `^4.0.0` or `^5.0.0` ([npm3](https://www.npmjs.com/package/npm3) recommended).
-- Python 3.5
+## A work in progress
 
-## Getting started
+This is a rough work yet, but here's a preview: [http://sir.surge.sh](http://sir.surge.sh)
 
-### Set up GitHub credentials
+## Tools
 
-Create a Developer App on GitHub and add the following variables to a ``.env`` file in the root project directory (NOTE: ``.env`` will not be versioned).
+### API server
 
-```shell
-SIR_GITHUB_CLIENT_ID='your-client-id'
-SIR_GITHUB_CLIENT_SECRET='your-client-secret'
-```
+
+* Python 3.5
+* aiohttp web framework
+* redis for caching
+* Task runner: invoke
+
+The API server runs in a Docker container, deployed to DigitalOcean.
+
+### Client-side app
+
+
+* ES6, compiled with Babel.js
+* Redux for state management
+* React for the view layer
+* Bootstrap + bootstrap-material-design + react-bootstrap for styling
+* Webpack for building it all
+* Task runner: npm scripts
+
+The web app runs as a static site, deployed with [surge](https://surge.sh/).
+
+## Getting up and running
 
 ### Start the API server
 
@@ -28,12 +44,11 @@ docker-compose -f docker-compose-dev.yml up
 Set the ``APIHOST`` environment variable to the IP of the Docker host machine.
 
 ```shell
-# Assuming a virtual machine named 'dev'
 docker-machine ip dev
 # => 192.168.99.100
 ```
 
-Add the following to your ``.env`` file.
+Add the IP to your ``.env`` file.
 
 ```shell
 APIHOST=192.168.99.100
@@ -46,7 +61,8 @@ Requires Python 3.5 and Redis.
 ```shell
 # After creating and activating a new virtual environment
 pip install -r requirements-dev.txt
-invoke server
+redis
+inv server
 ```
 
 Add the following to your ``.env`` file.
@@ -70,6 +86,15 @@ npm start
 
 Browse to http://localhost:3000 to view the app.
 
+### Optional, but recommended: Set up GitHub credentials
+
+Create a Developer App on GitHub and add the following variables to a ``.env`` file in the root project directory (NOTE: ``.env`` will not be versioned).
+
+```shell
+SIR_GITHUB_CLIENT_ID='your-client-id'
+SIR_GITHUB_CLIENT_SECRET='your-client-secret'
+```
+
 ## Running tests
 
 ### API tests
@@ -83,7 +108,7 @@ docker-compose run api inv test
 #### Without Docker
 
 ```shell
-invoke test
+inv test
 ```
 
 ## Client-side tests
@@ -91,3 +116,7 @@ invoke test
 ```shell
 npm test
 ```
+
+## License
+
+MIT licensed.

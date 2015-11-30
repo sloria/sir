@@ -7,6 +7,7 @@ api:
   environment:
     - REDIS_HOST=redis
     - REDIS_PORT=6379
+    - NODE_ENV=production
   volumes:
     - /usr/src/app
   expose:

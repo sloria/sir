@@ -3,13 +3,11 @@ import fetch from 'isomorphic-fetch';
 const API_PREFIX = '/v1';
 // Use variables from config to build API URL
 const API_BASE = __APIHOST__;
-const USE_HTTPS = __PROD__;
-
-const PROTOCOL = USE_HTTPS ? 'https://' : 'http://';
 
 function formatUrl(path) {
   const adjustedPath = path[0] !== '/' ? '/' + path : path;
-  return PROTOCOL + API_BASE + API_PREFIX + adjustedPath;
+  // TODO: Use https once ssl is set up for the SIR API
+  return 'http://' + API_BASE + API_PREFIX + adjustedPath;
 }
 
 // https://github.com/github/fetch#handling-http-error-statuses
