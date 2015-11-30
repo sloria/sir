@@ -5,6 +5,7 @@ python:
   - "3.5"
 
 install:
+  - cp .env.example .env
   - npm install
   - pip install -r requirements-dev.txt
 
