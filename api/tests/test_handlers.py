@@ -43,6 +43,15 @@ def error_app(make_app):
 def error_client(error_app):
     return TestApp(error_app)
 
+
+class TestIndex:
+
+    def test_index(self, client):
+        res = client.get('/v1/')
+        assert res.status_code == 200
+        assert res.json['message'] == 'Welcome to the sir API'
+        assert 'should_i_release' in res.json['links']
+
 class TestShouldIRelease:
 
     def test_success(self, client):
