@@ -8,9 +8,10 @@ def server(port=5000, reload=True):
     """Run the development server"""
     command = (
         'gunicorn "api.app:create_app()" -w 4 '
-        '--bind 0.0.0.0:{port} --worker-class aiohttp.worker.GunicornWebWorker '
-        '--reload'
+        '--bind 0.0.0.0:{port} --worker-class aiohttp.worker.GunicornWebWorker'
     ).format(port=port)
+    if reload:
+        command += ' --reload'
     run(command, echo=True)
 
 @task
