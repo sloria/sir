@@ -38,7 +38,7 @@ export class HomeView extends React.Component {
   handleDismiss(e, username, repo) {
     this.props.actions.remove(username, repo);
   }
-  handleChange(e) {
+  handleChange() {
     if (this.props.shouldIRelease.error) {
       this.props.actions.dismissError();
     }
