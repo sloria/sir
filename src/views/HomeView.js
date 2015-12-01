@@ -13,8 +13,7 @@ import {repoName, validateRepoName} from '../utils/github';
 // the component can be tested w/ and w/o being connected.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 const mapStateToProps = (state) => ({
-  shouldIRelease: state.shouldIRelease,
-  routerState : state.router
+  shouldIRelease: state.shouldIRelease
 });
 const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators(actions, dispatch)
@@ -28,8 +27,7 @@ export class HomeView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      errorMessage: '',
-      text: ''
+      errorMessage: ''
     };
   }
   handleSave(text) {
@@ -44,7 +42,7 @@ export class HomeView extends React.Component {
     if (this.props.shouldIRelease.error) {
       this.props.actions.dismissError();
     }
-    this.setState({text: e.target.value, errorMessage: ''});
+    this.setState({errorMessage: ''});
   }
   validate(text) {
     if (text && !validateRepoName(text)) {

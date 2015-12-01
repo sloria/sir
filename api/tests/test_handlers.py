@@ -51,6 +51,7 @@ class TestIndex:
         assert res.status_code == 200
         assert res.json['message'] == 'Welcome to the sir API'
         assert 'should_i_release' in res.json['links']
+        assert res.json['links']['should_i_release'] == '/v1/should_i_release/:username/:repo/'
 
 class TestShouldIRelease:
 

@@ -9,17 +9,17 @@ const client = new APIClient();
 
 // Action types
 const ns = 'sir/should-i-release';
-const LOAD = `${ns}/LOAD`;
-const LOAD_SUCCESS = `${ns}/LOAD_SUCCESS`;
-const LOAD_FAIL = `${ns}/LOAD_FAIL`;
+export const LOAD = `${ns}/LOAD`;
+export const LOAD_SUCCESS = `${ns}/LOAD_SUCCESS`;
+export const LOAD_FAIL = `${ns}/LOAD_FAIL`;
 
-const REMOVE = `${ns}/REMOVE`;
-const REMOVE_ALL = `${ns}/REMOVE_ALL`;
+export const REMOVE = `${ns}/REMOVE`;
+export const REMOVE_ALL = `${ns}/REMOVE_ALL`;
 
-const REFRESH_START = `${ns}/REFRESH_START`;
-const REFRESH_ALL_START = `${ns}/REFRESH_ALL_START`;
+export const REFRESH_START = `${ns}/REFRESH_START`;
+export const REFRESH_ALL_START = `${ns}/REFRESH_ALL_START`;
 
-const DISMISS_ERROR = `${ns}/DISMISS_ERROR`;
+export const DISMISS_ERROR = `${ns}/DISMISS_ERROR`;
 
 // Reducer
 

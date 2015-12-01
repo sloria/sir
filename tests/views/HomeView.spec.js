@@ -3,8 +3,6 @@ import TestUtils              from 'react-addons-test-utils';
 import { bindActionCreators } from 'redux';
 import { HomeView }           from 'views/HomeView';
 
-sinon.assert.expose(assert, {prefix: ''});
-
 function shallowRender (component) {
   const renderer = TestUtils.createRenderer();
 
