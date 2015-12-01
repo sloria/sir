@@ -4,6 +4,7 @@ node_modules
 
 dist
 coverage
+.env
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
