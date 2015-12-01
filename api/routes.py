@@ -5,8 +5,8 @@ from . import handlers
 CONFIG_KEY = 'ROUTES'
 
 ROUTES = [
-    ('GET', '/', handlers.index),
-    ('GET', '/should_i_release/{username}/{repo}/', handlers.should_i_release),
+    ('GET', '/', handlers.index, 'index'),
+    ('GET', '/should_i_release/{username}/{repo}/', handlers.should_i_release, 'should_i_release'),
 ]
 
 
@@ -24,6 +24,6 @@ def setup(app, url_prefix=''):
     config = app.get(CONFIG_KEY, {})
     url_prefix = config.get('URL_PREFIX', url_prefix)
     for route in ROUTES:
-        method, url, handler = route
+        method, url, handler, name = route
         full_url = '{prefix}/{url}'.format(prefix=url_prefix.rstrip('/'), url=url.lstrip('/'))
-        cors.add(app.router.add_route(method, full_url, handler))
+        cors.add(app.router.add_route(method, full_url, handler, name=name))

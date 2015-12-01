@@ -6,7 +6,9 @@ async def index(request):
     return Response({
         'message': 'Welcome to the sir API',
         'links': {
-            'should_i_release': '/v1/should_i_release/:username/:repo/',
+            'should_i_release': request.app.router['should_i_release'].url(
+                parts=dict(username=':username', repo=':repo')
+            ),
         }
     })
 
