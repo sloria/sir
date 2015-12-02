@@ -11,10 +11,10 @@ function renderWithProps(props = {}) {
   return TestUtils.renderIntoDocument(<SirResult {...props} />);
 }
 
-describe('(Component) SirResult', () => {
+describe('(Component) SirResult', function() {
   let _rendered, _props, _spies;
 
-  beforeEach(() => {
+  beforeEach(function() {
     _spies = {
       refresh: sinon.spy(),
       dismiss: sinon.spy()
@@ -34,7 +34,7 @@ describe('(Component) SirResult', () => {
     _rendered  = renderWithProps(_props);
   });
 
-  it('should include the username and title in an a tag', () => {
+  it('should include the username and title in an a tag', function() {
     const h3 = findWithTag(_rendered, 'h3');
     assert.match(h3.textContent, /sloria\/ped/);
     assert.match(h3.textContent, /Yes/);
@@ -42,7 +42,7 @@ describe('(Component) SirResult', () => {
     assert.equal(atag.href, 'https://github.com/sloria/ped/');
   });
 
-  it('should include a button to go to the comparison page on GitHub', () => {
+  it('should include a button to go to the comparison page on GitHub', function() {
     const buttons = findAllWithClass(_rendered, 'btn');
     // First button is "See changes" button
     const seeChangesBtn = buttons[0];
@@ -50,7 +50,7 @@ describe('(Component) SirResult', () => {
     assert.equal(seeChangesBtn.href, compareURL);
   });
 
-  it('should include a button to refresh the result', () => {
+  it('should include a button to refresh the result', function() {
     const buttons = findAllWithClass(_rendered, 'btn');
     // Second button is "Refresh" button
     const refreshBtn = buttons[1];
@@ -58,7 +58,7 @@ describe('(Component) SirResult', () => {
     assert.isTrue(_spies.refresh.called);
   });
 
-  it('should have a button to dismiss', () => {
+  it('should have a button to dismiss', function() {
     const button = findWithClass(_rendered, 'close');
     TestUtils.Simulate.click(button);
     assert.isTrue(_spies.dismiss.called);

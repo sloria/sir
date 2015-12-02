@@ -1,18 +1,18 @@
 import * as utils from 'utils/github';
 
-describe('(utils) Github utils', () => {
-  describe('repoName', () => {
-    it('should join lowercase by default', () => {
+describe('(utils) Github utils', function() {
+  describe('repoName', function() {
+    it('should join lowercase by default', function() {
       assert.equal(utils.repoName('sloria', 'TextBlob'), 'sloria/textblob');
     });
 
-    it('should not lowercase if lowercase = false', () => {
+    it('should not lowercase if lowercase alse', function() {
       assert.equal(utils.repoName('sloria', 'TextBlob', false), 'sloria/TextBlob');
     });
   });
 
-  describe('validateRepoName', () => {
-    it('should validate repo names', () => {
+  describe('validateRepoName', function() {
+    it('should validate repo names', function() {
       assert.isTrue(utils.validateRepoName('sloria/textblob'));
       assert.isTrue(utils.validateRepoName('sloria/TextBlob'));
       assert.isTrue(utils.validateRepoName('  sloria/TextBlob'));

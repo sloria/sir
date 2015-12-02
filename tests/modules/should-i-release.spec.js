@@ -18,8 +18,8 @@ function makeResult(username, repo, overrides = {}) {
   return Object.assign({}, defaults, {username, repo}, overrides);
 }
 
-describe('(modules) should-i-release reducer', () => {
-  it('should handle LOAD by adding a new result if the result is not in list', () => {
+describe('(Module) should-i-release reducer', function() {
+  it('should handle LOAD by adding a new result if the result is not in list', function() {
     const initialState = {
       error: null,
       results: []
@@ -35,7 +35,7 @@ describe('(modules) should-i-release reducer', () => {
     });
   });
 
-  it('should handle LOAD by moving existing result to front of list', () => {
+  it('should handle LOAD by moving existing result to front of list', function() {
     const initialState = {error: null, results: [makeResult('sloria', 'textblob'), makeResult('sloria', 'ped')]};
     const action = {type: LOAD, payload: {username: 'sloria', repo: 'ped'}};
 
@@ -49,7 +49,7 @@ describe('(modules) should-i-release reducer', () => {
     });
   });
 
-  it('should handle LOAD_SUCCESS by updating an existing item', () => {
+  it('should handle LOAD_SUCCESS by updating an existing item', function() {
     const initialState = {error: null, results: [makeResult('sloria', 'ped', {requestPending: true})]};
     const action = {
       type: LOAD_SUCCESS,
@@ -65,7 +65,7 @@ describe('(modules) should-i-release reducer', () => {
     assert.isFalse(updatedItem.requestPending);
   });
 
-  it('should handle LOAD_FAIL by removing the result that errored', () => {
+  it('should handle LOAD_FAIL by removing the result that errored', function() {
     const initialState = {error: null, results: [makeResult('sloria', 'textblob'), makeResult('sloria', 'ped')]};
     const action = {
       type: LOAD_FAIL,
@@ -85,7 +85,7 @@ describe('(modules) should-i-release reducer', () => {
     assert.instanceOf(newState.error.error, Error);
   });
 
-  it('should handle REMOVE by removing a result', () => {
+  it('should handle REMOVE by removing a result', function() {
     const initialState = {error: null, results: [makeResult('sloria', 'textblob'), makeResult('sloria', 'ped')]};
     const action = {
       type: REMOVE,
@@ -99,19 +99,19 @@ describe('(modules) should-i-release reducer', () => {
     assert.equal(newState.results.length, 1);
   });
 
-  it('should handle DISMISS_ERROR by setting error to null', () => {
+  it('should handle DISMISS_ERROR by setting error to null', function() {
     const initialState = {error: new Error(), results: []};
     const newState = reducer(initialState, {type: DISMISS_ERROR});
     assert.isNull(newState.error);
   });
 
-  it('should handle REMOVE_ALL by resetting results to an empty array', () => {
+  it('should handle REMOVE_ALL by resetting results to an empty array', function() {
     const initialState = {error: null, results: [makeResult('sloria', 'textblob'), makeResult('sloria', 'ped')]};
     const newState = reducer(initialState, {type: REMOVE_ALL});
     assert.deepEqual(newState.results, []);
   });
 
-  it('should handle REFRESH_START by setting a result\'s requestPending value to true', () => {
+  it('should handle REFRESH_START by setting a result\'s requestPending value to true', function() {
     const initialState = {
       error: null,
       results: [
@@ -124,7 +124,7 @@ describe('(modules) should-i-release reducer', () => {
     assert.isTrue(newState.results[1].requestPending);
   });
 
-  it('should handle REHYDRATE_COMPLETE by resetting error to null', () => {
+  it('should handle REHYDRATE_COMPLETE by resetting error to null', function() {
     const initialState = {error: new Error(), results: []};
     const action = {type: REHYDRATE_COMPLETE};
     const newState = reducer(initialState, action);
