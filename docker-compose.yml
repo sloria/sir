@@ -8,6 +8,7 @@ api:
     - REDIS_HOST=redis
     - REDIS_PORT=6379
     - NODE_ENV=production
+    - APIHOST='sir.sloria.io'
   volumes:
     - /usr/src/app
   expose:
