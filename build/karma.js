@@ -12,7 +12,7 @@ function makeDefaultConfig () {
       './' + KARMA_ENTRY_FILE
     ],
     singleRun  : !argv.watch,
-    frameworks : ['mocha', 'sinon-chai', 'chai-as-promised', 'chai'],
+    frameworks : ['mocha', 'sinon-chai', 'chai'],
     preprocessors : {
       [KARMA_ENTRY_FILE] : ['webpack'],
       [`${config.get('dir_src')}/**/*.js`] : ['webpack'],
