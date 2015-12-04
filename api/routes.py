@@ -1,12 +1,17 @@
+from collections import namedtuple
+
 import aiohttp_cors
 
 from . import handlers
 
+Route = namedtuple('Route', ['method', 'path', 'handler', 'name'])
+
 CONFIG_KEY = 'ROUTES'
 
 ROUTES = [
-    ('GET', '/', handlers.index, 'index'),
-    ('GET', '/should_i_release/{username}/{repo}/', handlers.should_i_release, 'should_i_release'),
+    Route('GET', '/', handler=handlers.index, name='index'),
+    Route('GET', '/should_i_release/{username}/{repo}/',
+          handler=handlers.should_i_release, name='should_i_release'),
 ]
 
 
