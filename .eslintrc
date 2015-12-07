@@ -20,6 +20,7 @@
     "no-multi-spaces"  : 0,
     "quotes"           : [2, "single"],
     "jsx-quotes"       : [2, "prefer-single"],
+    "object-curly-spacing": 0,
     "react/no-multi-comp": 0,
     "one-var"          : 0
   }

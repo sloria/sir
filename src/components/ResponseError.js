@@ -21,12 +21,12 @@ export default class ResponseError extends React.Component {
       text = DEFAULT_MESSAGE;
     } else {
       switch (this.props.response.status) {
-      case 404:
-        const fullRepoName = repoName(this.props.username, this.props.repo);
-        text = `Could not find repo: ${fullRepoName}`;
-        break;
-      default:
-        text = DEFAULT_MESSAGE;
+        case 404:
+          const fullRepoName = repoName(this.props.username, this.props.repo);
+          text = `Could not find repo: ${fullRepoName}`;
+          break;
+        default:
+          text = DEFAULT_MESSAGE;
       }
     }
     return (
