@@ -1,28 +1,31 @@
+proxy:
+  restart: always
+  image: jwilder/nginx-proxy:latest
+  volumes:
+    - "/var/run/docker.sock:/tmp/docker.sock:ro"
+  ports:
+    - "80:80"
+
 api:
   restart: always
   build: .
   links:
+    - proxy
     - redis
   env_file: .env
   environment:
-    - REDIS_HOST=redis
-    - REDIS_PORT=6379
-    - NODE_ENV=production
-    - APIHOST='sir.sloria.io'
+    REDIS_HOST: 'redis'
+    REDIS_PORT: 6379
+    NODE_ENV: 'production'
+    APIHOST: 'sir.sloria.io'
+    VIRTUAL_HOST: 'sir.sloria.io'
+    VIRTUAL_PORT: 3030
   volumes:
     - /usr/src/app
   expose:
-    - "5000"
-  command: /usr/local/bin/gunicorn "api.app:create_app()" -w 4 --bind 0.0.0.0:5000 --worker-class aiohttp.worker.GunicornWebWorker --chdir=/usr/src/app
+    - "3030"
+  command: /usr/local/bin/gunicorn "api.app:create_app()" -w 4 --bind 0.0.0.0:3030 --worker-class aiohttp.worker.GunicornWebWorker --chdir=/usr/src/app
 
 redis:
   restart: always
   image: redis:3.0
-
-nginx:
-  restart: always
-  build: ./compose/nginx
-  links:
-    - api
-  ports:
-    - "80:80"

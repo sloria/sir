@@ -40,7 +40,7 @@ The web app runs as a static site, deployed with [surge](https://surge.sh/).
 
 ```shell
 docker-compose -f docker-compose-dev.yml build
-docker-compose -f docker-compose-dev.yml up
+docker-compose -f docker-compose-dev.yml up -d
 ```
 
 Set the ``APIHOST`` environment variable to the IP of the Docker host machine.

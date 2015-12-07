@@ -1,27 +1,30 @@
+proxy:
+  restart: always
+  image: jwilder/nginx-proxy:latest
+  volumes:
+    - "/var/run/docker.sock:/tmp/docker.sock:ro"
+  ports:
+    - "80:80"
+
 api:
   restart: always
   build: .
   dockerfile: Dockerfile-dev
   links:
+    - proxy
     - redis
   env_file: .env
   environment:
-    - REDIS_HOST=redis
-    - REDIS_PORT=6379
+    REDIS_HOST: 'redis'
+    REDIS_PORT: 6379
+    VIRTUAL_HOST: 'sir.dev'
+    VIRTUAL_PORT: 3030
   volumes:
     - .:/usr/src/app
   expose:
-    - "5000"
-  command: invoke server --port 5000
+    - "3030"
+  command: invoke server --port 3030
 
 redis:
   restart: always
   image: redis:3.0
-
-nginx:
-  restart: always
-  build: ./compose/nginx
-  links:
-    - api
-  ports:
-    - "80:80"
