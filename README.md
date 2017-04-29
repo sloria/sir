@@ -1,5 +1,7 @@
 # sir
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/sloria/sir.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/sloria/sir.svg?branch=master)](https://travis-ci.org/sloria/sir)
 
 ![screenshot](https://dl.dropboxusercontent.com/u/1693233/github/sir.png "sir")
